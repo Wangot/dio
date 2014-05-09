@@ -1,0 +1,10 @@
+{
+  "db": {
+    "database": "dio",
+    "protocol": "mysql",
+    "host": "localhost",
+    "port": "3306",
+    "user": "dio",
+    "password": "dio[p|3iV@+eK3y]"
+  }
+}
