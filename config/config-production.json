@@ -2,7 +2,7 @@
   "db": {
     "database": "dio",
     "protocol": "mysql",
-    "host": "localhost",
+    "host": "team-dio-mysql.cloudapp.net",
     "port": "3306",
     "user": "dio",
     "password": "dio[p|3iV@+eK3y]"
