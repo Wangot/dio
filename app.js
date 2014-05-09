@@ -24,8 +24,7 @@ app.set('views', path.join(__dirname, 'views')); // routes for views
 var engine = require('ejs-locals'); // view engine 
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
-app.use(express.static(path.join(__dirname, '/views/public'))); // resources
-// app.use("/public", express.static(__dirname + '/views/resources'));
+app.use(express.static(path.join(__dirname, '/views/resources'))); // resources
 
 app.use(express.bodyParser());
 
@@ -46,9 +45,13 @@ app.configure(function () {
     app.use(express.errorHandler());
   }
   
-  // Router
+  /* ROUTES */
   app.use(app.router);
-  var routes = require('./routes')(app);
+
+  var routes = require('./routes');
+  routes.attachHandlers(app);
+  /* END ROUTES */
+
 });
 
 http.createServer(app).listen(app.get('port'), function(){
