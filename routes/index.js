@@ -1,8 +1,13 @@
 exports.attachHandlers = function attachHandlers (server) {
+    server.get('/', index);
+    
     var publicSite = require('./public');
     publicSite.attachHandlers(server);
-    
-    server.get('/', index);
+
+
+    // MAPS
+    require('./maps')(server);
+
 };
 
 var index = function(req, res){
