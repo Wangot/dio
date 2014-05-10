@@ -7,9 +7,14 @@
     "user": "dio",
     "password": "dev+dio"
   },
-  "sms": {
-  	"code" : "2A5T7uG3",
-  	"token" : "LGmwLtMEYoesBFl0m6OJH7ZH1ubv",
-  	"refresh_token" : "ZTZzpjWOI2gWtzp428QU2Tucb9q3brHy"
+  "sms_smart": {
+  	"senderAddress" : "406704",
+	"code" : "2A5T7uG3",
+	"token" : "LGmwLtMEYoesBFl0m6OJH7ZH1ubv",
+	"refresh_token" : "ZTZzpjWOI2gWtzp428QU2Tucb9q3brHy"
+  },
+  "sms_twillio" : {
+  	"account_sid" : "ACc05eb2f67c2a357fa59d8ea91e65e97d",
+  	"auth_token" : "ea31e57e1352546cc5ac5265e93a377c"
   }
 }

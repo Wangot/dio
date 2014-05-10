@@ -16,6 +16,7 @@
     "passport-facebook": "latest",
     "connect-flash": "latest",
     "express-flash": "latest",
-    "q": "~1.0.0"
+    "q": "~1.0.0",
+    "twilio" : "1.6.0"
   }
 }

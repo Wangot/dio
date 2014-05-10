@@ -23,8 +23,8 @@ exports.attachHandlers = function attachHandlers (server) {
     // Authentication
     require("./auth")(server);
 
-    server.get('/testAPI', testAPI);
-
+    server.get('/api/four_hour_forecast', getFourhourForeCast);
+    server.post('/send/sms', sendSMS);
 };
 
 var index = function(req, res){
@@ -45,11 +45,25 @@ var isAuth = function(req, res, next){
   next();
 }; 
 
-var testAPI = function(req, res) {
+var getFourhourForeCast = function(req, res) {
   var path = require('path');
   var servicePath = path.resolve('./', 'models', 'service');
   var serviceNoahAPI = require(servicePath + '/noah_API.js');
   serviceNoahAPI.getFourHourForeCast(function(err, data) {
     res.json(200, data);
+  });
+}
+
+var sendSMS = function(req, res) {
+  var path = require('path');
+  var servicePath = path.resolve('./', 'models', 'service');
+  var serviceSMSAPI = require(servicePath + '/sms_API.js');
+  var message = req.body.message;
+
+  serviceSMSAPI.sendSMS_TWILLIO(message, function(err, data) {
+    if (!err) {
+      res.set('Content-Type', 'text/html');
+      res.send(200, 'Message Sent!');
+    }
   });
 }
