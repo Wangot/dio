@@ -1,0 +1,127 @@
+@CHARSET "UTF-8";
+
+html, body {
+    -webkit-font-smoothing: antialiased !important;
+    font-family: 'Open Sans';
+    font-size: 14px;
+    background: #191919 url(../images/body-home.jpg) no-repeat;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans';
+}
+
+.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
+.content {
+    width: 100%;
+	text-align: left;
+	margin: 0 auto;
+    max-width: 940px;
+    padding: 0;
+}
+
+/* HEADER */
+#header {
+    background: #DFE0E1;
+	max-width: 940px;
+	margin: 0 auto;
+	border-radius: 0;
+	margin-top: 10px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	height: 60px;
+}
+
+#header .navbar-header {
+    margin-top: 5px;
+}
+
+#header #logo {
+    font-family: Lucida Sans, Arial;
+	font-weight: bold;
+	text-decoration: none;
+	color: #6D6F71;
+	font-size: 22px;
+}
+
+#main-nav ul {
+    margin-top: 5px;
+}
+
+#main-nav ul li a {
+    font-size: 18px;
+	font-family: Lucida Sans, Arial;
+	font-weight: bold;
+	text-decoration: none;
+	color: #6D6F71;
+}
+
+#main-nav ul li a:hover {
+    background: none;
+    text-decoration: underline;
+}
+
+#bottom {
+    background: #0D0D0D;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+#bottom .col {
+     margin: 0 0 10px 0;   
+}
+
+#bottom #address input#search-address {
+    margin: 10px 5px 0 0;
+	width: 255px;
+	font: 14px "Lucida Sans", Arial, Helvetica, sans-serif;
+	color: #6D6E71;
+	border: 1px solid #000;
+	padding: 3px;
+}
+
+#bottom #address #search-btn {
+    padding: 4px 12px;
+	background: #029245;
+	color: #fff;
+	font-size: 12px;
+	margin-top: -3px;
+	font-weight: 700;
+}
+
+#bottom .col select {
+    margin: 10px 5px 0 0;
+    width: 205px;
+}
+
+#body-content {
+    margin-top: 25px;
+}
+
+.slides {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+
+/* FOOTER */
+#footer {
+    background: #232222;
+	margin-top: 30px;
+	border-radius: 5px;
+	padding: 7px;
+}
+
+#footer h4 {
+    color: #6D6E71;
+    font-weight: 600;
+}
+
+#footer p, #footer a {
+    color: #fff;
+    font-size: 12px;
+}
