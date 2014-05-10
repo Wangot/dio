@@ -1,10 +1,8 @@
-var passport = require("passport")
-
 exports.attachHandlers = function attachHandlers (server) {
     server.get('/', index);
     
-    var publicSite = require('./public');
-    publicSite.attachHandlers(server);
+    //Public page
+    require('./public')(server);
 
     // MAPS
     require('./maps')(server);
@@ -19,27 +17,8 @@ exports.attachHandlers = function attachHandlers (server) {
       }
     );
 
-    // LOGIN
-    server.get('/login',
-      function(req, res, next){
-        if (req.isAuthenticated()) {
-          res.redirect('/dashboard');
-        }
-        next();
-      },
-      function(req, res){
-        res.render('public/site/login', { title: 'Express' });
-      }
-    );
-
-    server.post('/login',
-      passport.authenticate('local', { successRedirect: '/dashboard', failureRedirect: '/login', failureFlash: true }),
-      function(req, res){
-        // DO NOT REDIRECT HERE BECAUSE successRedirect is already set! 
-        // (only do redirection here when this needs to contains the success handler:
-        //  i.e.: getting where the user will be redirected based on session's last visited page)
-      }
-    );
+    // Authentication
+    require("./auth")(server);
 };
 
 var index = function(req, res){

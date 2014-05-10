@@ -1,7 +1,7 @@
 module.exports = function attachHandlers (router) {
 
   // about us page
-  router.get('/about', require('./about')());
+  router.get('/about', require('./about'));
 
   // contact page
   // router.get('/contact', require('./contact')());
