@@ -4,8 +4,8 @@ exports.attachHandlers = function attachHandlers (server) {
     //Public page
     require('./public')(server);
 
-    var apiSite = require('./api');
-    apiSite.attachHandlers(server);
+    // API
+    require('./api')(server);
 
     // MAPS
     require('./maps')(server);

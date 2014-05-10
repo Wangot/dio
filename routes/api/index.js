@@ -1,3 +1,3 @@
-exports.attachHandlers = function attachHandlers (server) {
+module.exports = function(server) {
   require('./event')(server);
 };
