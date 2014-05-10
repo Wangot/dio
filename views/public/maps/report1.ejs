@@ -1,0 +1,86 @@
+<% layout('../layout') -%>
+
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; margin: 0; padding: 0 }
+  #map-canvas { 
+  	height: 740px;
+  	width: 100%;
+  }
+</style>
+<script type="text/javascript"
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWOlwKkkrv_9ZfMcySRcsNQeKGACHpEA4&sensor=true&libraries=visualization">
+</script>
+<script type="text/javascript">
+  function initialize() {
+        var locations = [
+        {
+            lat:14.5834, 
+            lng:120.986, 
+            address:'15 United Nations Ave, Manila, Philippines',
+            title:'Title',
+            descr:'15 United Nations Ave, Manila, Philippines Description'           
+        }, 
+         {
+            lat:14.5608, 
+            lng:121.078, 
+            address:'Caruncho Ave, Pasig City, Philippines',
+            title:'Caruncho Ave, Pasig City, Philippines Title',
+            descr:'Description'           
+        },       
+         {
+            lat:14.5298, 
+            lng:121.034, 
+            address:'Lawton Ave, Taguig City, Philippines',
+            title:'Title Lawton Ave, Taguig City, Philippines',
+            descr:'Lawton Ave, Taguig City, Philippines Description'           
+        }      
+                   
+    ];
+    
+    var latLng = new google.maps.LatLng(14.559, 121.017);
+    
+    var mapOptions = {
+        center: latLng,
+        zoom: 9,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        panControl: true,
+        zoomControl: true,          
+        streetViewControl: false
+    };
+    
+    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+        
+    var content = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h4 style="font-size: 16px;margin-bottom: 5px;">Caruncho Ave, Pasig City, Philippines</h4>'+
+      '<p style="font-style: italic;font-weight: 400;font-size: 10px;">As of May 11, 2014</p>'+
+      '<div id="bodyContent">'+
+      '<ul><li><b>Flood Hazard:</b>' +
+      'Heritage Site.</li>'+
+      '<li><b>Description:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed risus rutrum, tincidunt lorem nec, tincidunt dui. Mauris pulvinar luctus est suscipit auctor.' +
+      '</li></div>'+
+      '</div>';
+      
+    var infowindow = new google.maps.InfoWindow({
+      content: content
+    });
+    
+    var marker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        icon: 'public/images/disasters/flood.png',
+     });
+     
+     google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map,marker);
+      });
+
+ }   
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+
+<div id="map-canvas"/>

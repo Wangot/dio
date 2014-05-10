@@ -32,21 +32,21 @@
     <div class="tools-wrapper">
         <ul class="tools nav nav-tabs">
             <li class="active">
-                <a href="#disaster-type" id="crime-types-nav-link" class="">
+                <a href="#disaster-type" data-toggle="tab">
                     <span class="left">&nbsp;</span>
                     <span class="center">Disaster Types</span>
                     <span class="right">&nbsp;</span>
                 </a>
             </li>
             <li>
-                <a href="#date" id="crime-types-nav-link" class="">
+                <a href="#date" data-toggle="tab" class="">
                     <span class="left">&nbsp;</span>
                     <span class="center">Date</span>
                     <span class="right">&nbsp;</span>
                 </a>
             </li>
             <li>
-                <a href="#address" id="crime-types-nav-link" class="">
+                <a href="#address" data-toggle="tab" class="">
                     <span class="left">&nbsp;</span>
                     <span class="center">Address</span>
                     <span class="right">&nbsp;</span>
@@ -55,7 +55,7 @@
         </ul>   
         
         <div class="tab-content">
-            <div class="tab-pane active" id="disaster-type">
+            <div class="tab-pane fade in active" id="disaster-type">
                 <div class="container content">
                     <div class="col-md-3">
                         <p>Show <b style="color: #464646">Disasters</b> on the map by checking the box under the disaster type you want to see.</p>
@@ -73,30 +73,43 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane" id="date">
+            <div class="tab-pane fade" id="date">
                  <div class="container content">...</div>
             </div>
-            <div class="tab-pane" id="address">
+            <div class="tab-pane fade" id="address">
                  <div class="container content">...</div>
             </div>
             <div class="container content">
                 <div class="toolbar">
                     <span class="status-message">
-                        <a class=""> 42 crimes </a>
+                        <a class=""> 42 Disasters </a>
                         <p> between 5/10/2014 - 5/11/2014</p>
                     </span>
                     
                     <div class="side-menu pull-right">
                         <ul>
-                            <li><a class="btn"><i class="icon-envelope"></i></a></li>
-                            <li><a class="btn"><i class="icon-link"></i></a></li>
-                            <li><a class="btn"><i class="icon-bar-chart"></i></a></li>
-                            <li><a class="btn"><i class="icon-list-alt"></i></a></li>
+                            <li><a class="btn" data-toggle="tooltip" title="Send Message"><i class="icon-envelope"></i></a></li>
+                            <li><a class="btn" data-toggle="tooltip" title="Link"><i class="icon-link"></i></a></li>
+                            <li><a class="btn" data-toggle="tooltip" title="Statistics"><i class="icon-bar-chart"></i></a></li>
+                            <li><a class="btn" data-toggle="tooltip" title="Detailed Report"><i class="icon-list-alt"></i></a></li>
+                            <li><a id="collapse-btn" class="btn" data-toggle="tooltip" title="Collapse"><i class="icon-long-arrow-up"></i></a></li>
                         </ul>    
                     </div>
                 </div> 
              </div>   
         </div> 
-        
     </div>
 </div>
+
+<script>
+    $("#collapse-btn").click(function(){
+        if( $("ul.tools li").hasClass('active')){
+            $("ul.tools li").removeClass("active");
+            $(".tab-pane").removeClass("active in");
+            $("#collapse-btn").addClass("disabled");
+        }else {
+            $(".tab-pane").addClass("fade in");
+            $("#collapse-btn").removeClass("disabled");
+        }      
+    });
+</script>
