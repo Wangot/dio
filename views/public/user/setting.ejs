@@ -85,8 +85,8 @@
               <div class="col-md-9">
                 <ul class="chk-container">
                   <li><input type="checkbox" id="selecctall-disaster"/> Select All</li>
-                  <% for(x=0; x<disasters.length; x++) { %>
-                    <li><input class="disaster-checkbox" type="checkbox" name="disaster[]" value="<%= disasters[x].id%>"><%= disasters[x].name%></li>
+                  <% for(var x=0; x<disasters.length; x++) { %>
+                    <li><input class="disaster-checkbox" type="checkbox" <%= (formattedDisasters1.indexOf(disasters[x].id) != -1 ? "checked='checked'" : "") %> name="disaster[]" value="<%= disasters[x].id%>"><%= disasters[x].name%></li>
                   <% }%>
                 </ul>
               </div>
@@ -96,6 +96,24 @@
               <div class="col-md-9" id="my-contacts">
                 <input type='button' value='Add Mobile Number' onClick="addContact('MOBILE_NUMBER', false)" />
                 <input type='button' value='Add Email Address' onClick="addContact('EMAILS', false)" />
+
+                <% for(var x=0; x<contacts.length; x++) { 
+	                if(contacts[x].type == 'MOBILE_NUMBER' || contacts[x].type == 'EMAIL') {
+	                	if(contacts[x].type == 'MOBILE_NUMBER') {
+	                		placeholder = "Mobile Number";
+	                	} else {
+	                		placeholder = "Email Address";
+	                	}
+	                	parentId = "my-contacts-" + (x+1);
+
+	                	name = contacts[x].type == 'EMAIL' ? 'EMAILS' : contacts[x].type;
+
+	                	name += "["+ (x+1) +"]";
+	                	%>
+	                	<input type="text" name="<%= name %>" class="form-control" id="<%= parentId %>" placeholder="<%= placeholder %>" value="<%= contacts[x].value %>">
+	                 	
+	                <%}
+             	}%>
               </div>
             </div>
         
@@ -106,8 +124,8 @@
               <div class="col-md-9">
                 <ul class="chk-container">
                   <li><input type="checkbox" id="selecctall-disaster-relative"/> Select All</li>
-                  <% for(x=0; x<disasters.length; x++) { %>
-                    <li><input class="disaster-checkbox-relative" type="checkbox" name="disaster_relative[]" value="<%= disasters[x].id%>"><%= disasters[x].name%></li>
+                  <% for(var x=0; x<disasters.length; x++) { %>
+                    <li><input class="disaster-checkbox-relative" type="checkbox" <%= (formattedDisasters2.indexOf(disasters[x].id) != -1 ? "checked='checked'" : "") %> name="disaster_relative[]" value="<%= disasters[x].id%>"><%= disasters[x].name%></li>
                   <% }%>
                 </ul>
               </div>
@@ -117,6 +135,24 @@
               <div class="col-md-9" id="relative-contacts">
                 <input type='button' value='Add Mobile Number' onClick="addContact('OTHERS_MOBILE_NUMBER', true)" />
                 <input type='button' value='Add Email Address' onClick="addContact('OTHERS_EMAIL', true)" />
+
+                <% for(var y=0; y<contacts.length; y++) { 
+	                if(contacts[y].type == 'OTHERS_MOBILE_NUMBER' || contacts[y].type == 'OTHERS_EMAIL') {
+	                	if(contacts[y].type == 'OTHERS_MOBILE_NUMBER') {
+	                		placeholder = "Mobile Number";
+	                	} else {
+	                		placeholder = "Email Address";
+	                	}
+	                	parentId = "relative-contacts-" + (y+1);
+
+	                	name = contacts[y].type;
+
+	                	name += "["+ (y+1) +"]";
+	                	%>
+	                	<input type="text" name="<%= name %>" class="form-control" id="<%= parentId %>" placeholder="<%= placeholder %>" value="<%= contacts[y].value %>">
+	                 	
+	                <%}
+             	}%>
               </div>
             </div>
            
@@ -221,12 +257,14 @@
     });
     
     
-      function addContact(type, isForRelative) {
+      function addContact(type, isForRelative, value) {
         var parentId = 'my-contacts';
         var name = '';
         var html = '';
         var helpBlock = '';
         var placeholder = '';
+
+        value = value || '';
     
         if (type == 'MOBILE_NUMBER' || type == 'OTHERS_MOBILE_NUMBER') {
           helpBlock = 'Example: 09191234567';
@@ -235,15 +273,18 @@
           helpBlock = 'Example: email@domain.com';
           placeholder = 'Email Address';
         }
+
+        if (isForRelative) {
+        	parentId = 'relative-contacts';
+      	}
     
         var id = ($('#'+parentId+' .form-control').length + 1).toString();
         name = type+'['+id+']';
     
-        html = '<input type="text" name="'+name+'" class="form-control" id="'+parentId+'-' + id + '" placeholder="'+placeholder+'"><p class="help-block">'+helpBlock+'</p>';
+        html = '<input type="text" name="'+name+'" class="form-control" id="'+parentId+'-' + id + '" placeholder="'+placeholder+'" value="'+value+'"><p class="help-block">'+helpBlock+'</p>';
     
         if (isForRelative) {
-          parentId = 'relative-contacts';
-          html = '<input type="text" name="'+name+'" class="form-control" id="'+parentId+'-' + id + '" placeholder="'+placeholder+'"><p class="help-block">'+helpBlock+'</p>';
+          html = '<input type="text" name="'+name+'" class="form-control" id="'+parentId+'-' + id + '" placeholder="'+placeholder+'" value="'+value+'"><p class="help-block">'+helpBlock+'</p>';
         }
     
         $('#'+parentId).append(html);

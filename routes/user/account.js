@@ -18,7 +18,7 @@ module.exports = function(server) {
       var Contact = require(path.join(modelsPath, '/contact'))(db);
       var UserAlertSetting = require(path.join(modelsPath, '/userAlertSetting'))(db);
 
-      var disasters, contacts;
+      var disasters, contacts, formattedDisasters1 = [], formattedDisasters2 = [];
 
       Q.ninvoke(Event,'find')
       .then(function(data){
@@ -30,15 +30,18 @@ module.exports = function(server) {
         return Q.ninvoke(UserAlertSetting, 'find', {user_id: req.user.id});
       })
       .then(function(settings){
-        // compose disaster
-        var formattedDisasters = {};
         settings.forEach(function(setting){
-
+          if (setting.type == 'SYSTEM') {
+            formattedDisasters1.push(setting.event_id);
+          } else {
+            formattedDisasters2.push(setting.event_id);
+          }
         })
+
         return true;
       })
       .then(function(isSuccess){
-        res.render('public/user/setting', { title: 'User Setting', disasters: disasters, contacts:contacts});
+        res.render('public/user/setting', { title: 'User Setting', disasters: disasters, contacts:contacts, formattedDisasters1:formattedDisasters1, formattedDisasters2:formattedDisasters2});
         return true;
       })
 
@@ -58,26 +61,39 @@ module.exports = function(server) {
       var User = require(path.join(modelsPath, '/user'))(db);
       var Contact = require(path.join(modelsPath, '/contact'))(db);
       var UserAlertSetting = require(path.join(modelsPath, '/userAlertSetting'))(db);
+      var userObject;
 
       // compose
-
-
       Q.ninvoke(User, 'get', req.user.id)
       .then(function(user){
-        return Q.ninvoke(Contact, 'remove', {user_id: user.id});
+        userObject = user;
+        // return Q.ninvoke(Contact, 'find', {user_id: user.id});
+        Contact.find({user_id: userObject.id}).remove(function (err) {
+          return true;
+        });
+        return true;
       })
       .then(function(deleted){
-        return Q.ninvoke(UserAlertSetting, 'remove', {user_id: user.id});
+        // return Q.ninvoke(UserAlertSetting, 'remove', {user_id: user.id});
+        UserAlertSetting.find({user_id: userObject.id}).remove(function (err) {
+          return true;
+        });
+
+        return true;
       })
       .then(createContacts)
       .then(createUserAlertSetting)
+      .then(function(isSuccess){
+        req.flash('success', "Successfully updated.");
+        res.redirect('/setting');
+      })
       .fail(function(error){
         console.log(error);
       })
 
-      function createContacts(users) {
+      function createContacts() {
         var contactData = [];
-        var user = users[0];
+        var user = userObject;
         if (postData.MOBILE_NUMBER && postData.MOBILE_NUMBER.length > 0) {
           var mobileNumbers = postData.MOBILE_NUMBER;
           for (var i = 0; i < mobileNumbers.length; i++) {
@@ -192,7 +208,7 @@ module.exports = function(server) {
 
         Q.ninvoke(UserAlertSetting,'create', alertSettingData)
         .then(function(settings){
-          return settings;
+          return true;
         })
         .fail(function(err) {
           console.log(err);
