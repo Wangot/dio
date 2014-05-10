@@ -123,7 +123,99 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 auto;
 }
 
+/* REGISTER */
+.register .content, .login .content {
+    background: #dfdfdf;
+    border-top: 1px solid #666;
+	padding: 30px;
+}
 
+.register .content h3, .login .content h3 {
+    font-weight: 700;
+    font-size: 22px;
+}
+
+.register .content p {
+    font-style: italic;
+    font-size: 12px;
+}
+
+.fb-btn {
+    background-color: #0B87C2;
+	color: white;
+	font-weight: bold;
+	padding: 10px 20px;
+	font-size: 15px;
+	border: 1px solid transparent;
+	margin-top: 5px;
+}
+
+.fb-btn:hover {
+    color: #0B87C2;
+    background: #fff;
+    border: 1px solid #0B87C2;
+    -webkit-transition: color 0.15s linear,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out;
+    -moz-transition: color 0.15s linear,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out;
+    -o-transition: color 0.15s linear,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out;
+    transition: color 0.15s linear,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out;  
+}
+
+.facebook-signup {
+    margin-bottom: 15px;
+}
+
+.sidebar h5 {
+    color: gray;
+	border-bottom: 1px solid #CCC;
+	padding-bottom: 12px;
+	margin-top: 25px;
+	font-weight: 700;
+}
+
+form .chk-container {
+    list-style: none;
+    margin-left: -40px;
+}
+
+form .chk-container input[type="radio"], input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+form #my-contacts input, form #relative-contacts input {
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+form select#country {
+    margin-bottom: 15px;
+}
+
+form #register-btn, #login-btn {
+    background-color: #0B87C2;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;   
+    padding: 5px 20px;
+    border: 1px solid transparent;
+}
+
+#login-btn {
+    padding: 5px 30px !important;
+}
+
+form #register-btn:hover, #login-btn:hover {
+    color: #0B87C2;
+    background: #fff;
+    border: 1px solid #0B87C2;
+    -webkit-transition: color 0.15s linear,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out;
+    -moz-transition: color 0.15s linear,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out;
+    -o-transition: color 0.15s linear,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out;
+    transition: color 0.15s linear,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out;    
+}
+
+#login-form input {
+    margin-bottom: 15px;
+}
 
 /* FOOTER */
 #footer {
@@ -141,6 +233,7 @@ h1, h2, h3, h4, h5, h6 {
 #footer p, #footer a {
     color: #fff;
     font-size: 12px;
+    font-style: normal;
 }
 
 /* MEDIA QUERIES */

@@ -1,187 +1,278 @@
-<% layout('../layout') -%>
-<div class="account-container register">
-  
-  <div class="content clearfix">
-  <div class="header">
-    <a class="fb-btn btn" href="/auth/facebook">
-       <i class="icon-facebook"></i>
-       FACEBOOK SIGNUP
-    </a>
-    <div class="col-md-12">
-      <div class="line col-xs-4 col-sm-5 col-md-5"></div>
-      <span class="col-xs-4 col-sm-2 col-md-2" style="color: #c9c7c7">OR</span>
-      <div class="line col-xs-4 col-sm-5 col-md-5"></div> 
-    </div>
-  </div>
-  <form id="dio-register" action="/register" method="post" role="form">
-    <div class="form-group">
-      <label for="emailaddress" class="col-md-2">
-      Email address:
-      </label>
-      <div class="col-md-10">
-      <input type="email" name="email" class="form-control" id="emailaddress" placeholder="Enter email address">
-      <p class="help-block">
-        Example: yourname@domain.com
-      </p>
-      </div>
-    </div>
-   
-    <div class="form-group">
-      <label for="password" class="col-md-2">
-      Password:
-      </label>
-      <div class="col-md-10">
-      <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password">
-      <p class="help-block">
-        Min: 6 characters (Alphanumeric only)
-      </p>
-      </div>
-   
-   
-    </div>
-   
-    <div class="form-group">
-      <label class="col-md-2">
-      Check the box next to the disaster types that you would like to be notified about.
-      </label>
-      <div class="col-md-10">
-        <ul class="chk-container">
-          <li><input type="checkbox" id="selecctall-disaster"/> Select All</li>
-          <% for(x=0; x<disasters.length; x++) { %>
-            <li><input class="disaster-checkbox" type="checkbox" name="disaster[]" value="<%= disasters[x].id%>"><%= disasters[x].name%></li>
-          <% }%>
-        </ul>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-md-2">My Contacts:</label>
-      <div class="col-md-10" id="my-contacts">
-        <input type='button' value='Add Mobile Number' onClick="addContact('MOBILE_NUMBER', false)" />
-        <input type='button' value='Add Email Address' onClick="addContact('EMAILS', false)" />
-      </div>
-    </div>
+register
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <div class="form-group">
-      <label class="col-md-2">
-      Check the box next to the disaster types that your relative would like to be notified about when you need a HELP.
-      </label>
-      <div class="col-md-10">
-        <ul class="chk-container">
-          <li><input type="checkbox" id="selecctall-disaster-relative"/> Select All</li>
-          <% for(x=0; x<disasters.length; x++) { %>
-            <li><input class="disaster-checkbox-relative" type="checkbox" name="disaster_relative[]" value="<%= disasters[x].id%>"><%= disasters[x].name%></li>
-          <% }%>
-        </ul>
-      </div>
+        <title>Readysaster- Hack for Resilience</title>
+
+        <% stylesheet('/vendors/bootstrap/3.1.1/css/bootstrap.min.css') -%>
+        <% stylesheet('/vendors/bootstrap/3.1.1/css/bootstrap-theme.min.css') -%>
+
+        <% stylesheet('/public/css/style-home.css') -%>
+        <% stylesheet('/public/css/font-awesome.css') -%>
+
+        <% script('/vendors/jquery/1.11.0/jquery.min.js') -%>
+        <% script('/vendors/bootstrap/3.1.1/js/bootstrap.min.js') -%>
+        <% script('/vendors/angular/1.2.14/angular.min.js') -%>
+
+        <% script('/public/js/custom.js') -%>
+
+        <%-stylesheets%>
+        <%-scripts%>
+
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="header">
+            <div id="header" class="navbar">
+                <div class="navbar-inner">
+                    <div class="container content">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-reorder icon-2x"></span>
+                            </button>
+                            <a id="logo" class="navbar-brand">
+                                <span id="logo-img"><img src="public/images/logo.png" class="img-responsive"/></span>
+                                <p class="hidden-xs"><span style="color: #333">Assistance</span><span style="color: #0B87C2"> In Disaster</span></p>
+                            </a> 
+                            <!--<a id="logo" class="navbar-brand" href="#">DISASTERS<span style="color: #0B87C2">ALERT</span></a> -->
+                        </div>
+                        <div id="main-nav" class="navbar-collapse collapse">
+                            <ul id="menu-container" class="nav navbar-nav pull-right">
+                                <li><a href="">Map</a></li>
+                                <li><a href="">Get Involved</a></li>
+                                <li><a href="">About</a></li>
+                                <li><a href="">Contact</a></li>
+                                <li><a href="">Sign Up</a></li>
+                            </ul>
+                       </div><!--/.nav-collapse -->
+                     </div>
+                  </div>
+            </div>
+        </div>
+        
+    <div class="account-container register">
+      <div class="content clearfix">
+      <div class="col-md-12">
+        <div class="sidebar col-md-3 pull-right">
+            <div class="facebook-signup">
+                <h5>OR you can Sign Up with your <b style="color: #333">Facebook Account</b>:</h5>
+                <a class="fb-btn btn" href="/auth/facebook">
+                   <i class="icon-facebook"></i>
+                   FACEBOOK SIGNUP
+                </a>
+            </div>
+            <div class="">
+                <h5>HOW IT WORKS</h5>
+                <span style="color: gray"><i class="icon-envelope icon-2x"></i>  When a disaster occurs in your area we will send you or your relative an e-mail or text messages with the report telling you exactly what disaster occurred and where they happened.</span>
+            </div>
+        </div>
+      <div class="header col-md-9">
+        <h3>SIGN UP AND RECEIVE DISASTER ALERTS</h3>
+        <p>We'll send you disaster alerts near you...</p>
+          <form id="dio-register" action="/register" method="post" role="form">
+            <div class="form-group">
+              <label for="emailaddress" class="col-md-3">
+              Email address:
+              </label>
+              <div class="col-md-9">
+              <input type="email" name="email" class="form-control" id="emailaddress" placeholder="Enter email address">
+              <p class="help-block">
+                Example: yourname@domain.com
+              </p>
+              </div>
+            </div>
+           
+            <div class="form-group">
+              <label for="password" class="col-md-3">
+              Password:
+              </label>
+              <div class="col-md-9">
+              <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password">
+              <p class="help-block">
+                Min: 6 characters (Alphanumeric only)
+              </p>
+              </div>
+            </div>
+           
+           <div class="form-group">
+              <label class="col-md-3" style="font-weight: 300; font-size: 12px; color: gray">
+              Check the box next to the disaster types that you would like to be notified about.
+              </label>
+              <div class="col-md-9">
+                <ul class="chk-container">
+                  <li><input type="checkbox" id="selecctall-disaster"/> Select All</li>
+                  <% for(x=0; x<disasters.length; x++) { %>
+                    <li><input class="disaster-checkbox" type="checkbox" name="disaster[]" value="<%= disasters[x].id%>"><%= disasters[x].name%></li>
+                  <% }%>
+                </ul>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3">My Contacts:</label>
+              <div class="col-md-9" id="my-contacts">
+                <input type='button' value='Add Mobile Number' onClick="addContact('MOBILE_NUMBER', false)" />
+                <input type='button' value='Add Email Address' onClick="addContact('EMAILS', false)" />
+              </div>
+            </div>
+        
+            <div class="form-group">
+              <label class="col-md-3" style="font-weight: 300; font-size: 12px; color: gray">
+              Check the box next to the disaster types that your relative would like to be notified about when you need a HELP.
+              </label>
+              <div class="col-md-9">
+                <ul class="chk-container">
+                  <li><input type="checkbox" id="selecctall-disaster-relative"/> Select All</li>
+                  <% for(x=0; x<disasters.length; x++) { %>
+                    <li><input class="disaster-checkbox-relative" type="checkbox" name="disaster_relative[]" value="<%= disasters[x].id%>"><%= disasters[x].name%></li>
+                  <% }%>
+                </ul>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3">Relative Contacts:</label>
+              <div class="col-md-9" id="relative-contacts">
+                <input type='button' value='Add Mobile Number' onClick="addContact('OTHERS_MOBILE_NUMBER', true)" />
+                <input type='button' value='Add Email Address' onClick="addContact('OTHERS_EMAIL', true)" />
+              </div>
+            </div>
+           
+            <div class="form-group">
+              <label for="country" class="col-md-3">
+              Country:
+              </label>
+              <div class="col-md-9">
+              <select name="country" id="country" class="form-control">
+                <option>--Please Select--</option>
+                <option>India</option>
+                <option>United States</option>
+                <option>Canada</option>
+                <option>United Kingdom</option>
+                <option>Others</option>
+              </select>
+              </div>
+            </div>
+           
+            <div class="row">
+              <div class="col-md-3">
+              </div>
+              <div class="col-md-9">
+              <button id="register-btn" type="submit" class="btn">
+                Subscribe
+              </button>
+              </div>
+            </div>
+          </form>
+        </div>
+       </div>
     </div>
-    <div class="form-group">
-      <label class="col-md-2">Relative Contacts:</label>
-      <div class="col-md-10" id="relative-contacts">
-        <input type='button' value='Add Mobile Number' onClick="addContact('OTHERS_MOBILE_NUMBER', true)" />
-        <input type='button' value='Add Email Address' onClick="addContact('OTHERS_EMAIL', true)" />
-      </div>
+    
+     <div id="footer" class="container content">
+       <div class="col-sm-3 col-md-3">
+           <h4>RELATED LINKS</h4>
+           <ul>
+               <li><a>Disaster Alert</a></li>
+               <li><a>Help</a></li>
+               <li><a>Legend</a></li>
+               <li><a><i class="icon-facebook-sign"></i> Facebook</a></li>
+           </ul>
+       </div>         
+       <div class="col-sm-5 col-md-5">
+           <h4 id="appname">ABOUT A.I.D</h4>
+           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit nibh suscipit venenatis facilisis. Nam eget felis 
+           eget nisi pellentesque porta sed non tortor. Phasellus faucibus erat nec sem sodales, et bibendum tellus iaculis. Integer sit 
+           amet diam et sem vestibulum lobortis in sed nulla. Donec lobortis vehicula tortor, at fringilla erat fringilla nec. </p>
+       </div>         
+       <div class="col-sm-4 col-md-4 hidden-xs">
+           <h4>TEAM DIO</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit nibh suscipit venenatis facilisis. Nam eget felis 
+           eget nisi pellentesque porta sed non tortor. Phasellus faucibus erat nec sem sodales, et bibendum tellus iaculis.</p>
+       </div>         
     </div>
-   
-    <div class="form-group">
-      <label for="country" class="col-md-2">
-      Country:
-      </label>
-      <div class="col-md-10">
-      <select name="country" id="country" class="form-control">
-        <option>--Please Select--</option>
-        <option>India</option>
-        <option>United States</option>
-        <option>Canada</option>
-        <option>United Kingdom</option>
-        <option>Others</option>
-      </select>
-      </div>
-    </div>
-   
-    <div class="row">
-      <div class="col-md-2">
-      </div>
-      <div class="col-md-10">
-      <button type="submit" class="btn btn-info">
-        Subscribe
-      </button>
-      </div>
-    </div>
-  </form>
-</div>
-<script type="text/javascript">
-$(document).ready(function() {
-  $('#selecctall-disaster').click(function(event) {  //on click 
-      if(this.checked) { // check select status
-          $('.disaster-checkbox').each(function() { //loop through each checkbox
-              this.checked = true;  //select all checkboxes with class "checkbox1"               
-          });
-      }else{
-          $('.disaster-checkbox').each(function() { //loop through each checkbox
-              this.checked = false; //deselect all checkboxes with class "checkbox1"                       
-          });         
+                
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $('#selecctall-disaster').click(function(event) {  //on click 
+          if(this.checked) { // check select status
+              $('.disaster-checkbox').each(function() { //loop through each checkbox
+                  this.checked = true;  //select all checkboxes with class "checkbox1"               
+              });
+          }else{
+              $('.disaster-checkbox').each(function() { //loop through each checkbox
+                  this.checked = false; //deselect all checkboxes with class "checkbox1"                       
+              });         
+          }
+      });
+    
+      $('#selecctall-disaster-relative').click(function(event) {  //on click 
+          if(this.checked) { // check select status
+              $('.disaster-checkbox-relative').each(function() { //loop through each checkbox
+                  this.checked = true;  //select all checkboxes with class "checkbox1"               
+              });
+          }else{
+              $('.disaster-checkbox-relative').each(function() { //loop through each checkbox
+                  this.checked = false; //deselect all checkboxes with class "checkbox1"                       
+              });         
+          }
+      });
+    
+    
+      // $("#addContactButton").click(function () {
+      //     // if( ($('.form-horizontal .control-group').length+1) > 2) {
+      //     //     alert("Only 2 control-group allowed");
+      //     //     return false;
+      //     // }
+      //     var id = ($('#my-contacts .form-control').length + 1).toString();
+    
+      //     $('#my-contacts').append('<input type="text" class="form-control" id="my-contact-' + id + '" placeholder="Email"><p class="help-block">Example: yourname@domain.com</p>');
+      // });
+    
+      // $("#removeButton").click(function () {
+      //     if ($('.form-horizontal .control-group').length == 1) {
+      //         alert("No more textbox to remove");
+      //         return false;
+      //     }
+    
+      //     $(".form-horizontal .control-group:last").remove();
+      // });
+    });
+    
+    
+      function addContact(type, isForRelative) {
+        var parentId = 'my-contacts';
+        var name = '';
+        var html = '';
+        var helpBlock = '';
+        var placeholder = '';
+    
+        if (type == 'MOBILE_NUMBER' || type == 'OTHERS_MOBILE_NUMBER') {
+          helpBlock = 'Example: 09191234567';
+          placeholder = 'Mobile Number';
+        } else if (type == 'EMAILS' || type == 'OTHERS_EMAIL') {
+          helpBlock = 'Example: email@domain.com';
+          placeholder = 'Email Address';
+        }
+    
+        var id = ($('#'+parentId+' .form-control').length + 1).toString();
+        name = type+'['+id+']';
+    
+        html = '<input type="text" name="'+name+'" class="form-control" id="'+parentId+'-' + id + '" placeholder="'+placeholder+'"><p class="help-block">'+helpBlock+'</p>';
+    
+        if (isForRelative) {
+          parentId = 'relative-contacts';
+          html = '<input type="text" name="'+name+'" class="form-control" id="'+parentId+'-' + id + '" placeholder="'+placeholder+'"><p class="help-block">'+helpBlock+'</p>';
+        }
+    
+        $('#'+parentId).append(html);
       }
-  });
-
-  $('#selecctall-disaster-relative').click(function(event) {  //on click 
-      if(this.checked) { // check select status
-          $('.disaster-checkbox-relative').each(function() { //loop through each checkbox
-              this.checked = true;  //select all checkboxes with class "checkbox1"               
-          });
-      }else{
-          $('.disaster-checkbox-relative').each(function() { //loop through each checkbox
-              this.checked = false; //deselect all checkboxes with class "checkbox1"                       
-          });         
-      }
-  });
-
-
-  // $("#addContactButton").click(function () {
-  //     // if( ($('.form-horizontal .control-group').length+1) > 2) {
-  //     //     alert("Only 2 control-group allowed");
-  //     //     return false;
-  //     // }
-  //     var id = ($('#my-contacts .form-control').length + 1).toString();
-
-  //     $('#my-contacts').append('<input type="text" class="form-control" id="my-contact-' + id + '" placeholder="Email"><p class="help-block">Example: yourname@domain.com</p>');
-  // });
-
-  // $("#removeButton").click(function () {
-  //     if ($('.form-horizontal .control-group').length == 1) {
-  //         alert("No more textbox to remove");
-  //         return false;
-  //     }
-
-  //     $(".form-horizontal .control-group:last").remove();
-  // });
-});
-
-
-  function addContact(type, isForRelative) {
-    var parentId = 'my-contacts';
-    var name = '';
-    var html = '';
-    var helpBlock = '';
-    var placeholder = '';
-
-    if (type == 'MOBILE_NUMBER' || type == 'OTHERS_MOBILE_NUMBER') {
-      helpBlock = 'Example: 09191234567';
-      placeholder = 'Mobile Number';
-    } else if (type == 'EMAILS' || type == 'OTHERS_EMAIL') {
-      helpBlock = 'Example: email@domain.com';
-      placeholder = 'Email Address';
-    }
-
-    var id = ($('#'+parentId+' .form-control').length + 1).toString();
-    name = type+'['+id+']';
-
-    html = '<input type="text" name="'+name+'" class="form-control" id="'+parentId+'-' + id + '" placeholder="'+placeholder+'"><p class="help-block">'+helpBlock+'</p>';
-
-    if (isForRelative) {
-      parentId = 'relative-contacts';
-      html = '<input type="text" name="'+name+'" class="form-control" id="'+parentId+'-' + id + '" placeholder="'+placeholder+'"><p class="help-block">'+helpBlock+'</p>';
-    }
-
-    $('#'+parentId).append(html);
-  }
-</script>
+    </script>
+   </body>
+</html>

@@ -1,26 +1,124 @@
-<% layout('../layout') -%>
-<div class="container content">
-    <form id="login-form" class="login" action="/login" method="post">
-      <div class="login-fields">
-        <div class="field">
-          <div class="input-prepend">
-                <input id="username" name="username"  class="login" value="" type="username" placeholder="Username">
-          </div>
-        </div> <!-- /field -->
-        
-        <div class="field">
-            <div class="input-prepend">
-                <input id="password" name="password" class="login" value="" type="password" placeholder="Password">
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Readysaster- Hack for Resilience</title>
+
+        <% stylesheet('/vendors/bootstrap/3.1.1/css/bootstrap.min.css') -%>
+        <% stylesheet('/vendors/bootstrap/3.1.1/css/bootstrap-theme.min.css') -%>
+
+        <% stylesheet('/public/css/style-home.css') -%>
+        <% stylesheet('/public/css/font-awesome.css') -%>
+
+        <% script('/vendors/jquery/1.11.0/jquery.min.js') -%>
+        <% script('/vendors/bootstrap/3.1.1/js/bootstrap.min.js') -%>
+        <% script('/vendors/angular/1.2.14/angular.min.js') -%>
+
+        <% script('/public/js/custom.js') -%>
+
+        <%-stylesheets%>
+        <%-scripts%>
+
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="header">
+            <div id="header" class="navbar">
+                <div class="navbar-inner">
+                    <div class="container content">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-reorder icon-2x"></span>
+                            </button>
+                            <a id="logo" class="navbar-brand">
+                                <span id="logo-img"><img src="public/images/logo.png" class="img-responsive"/></span>
+                                <p class="hidden-xs"><span style="color: #333">Assistance</span><span style="color: #0B87C2"> In Disaster</span></p>
+                            </a> 
+                            <!--<a id="logo" class="navbar-brand" href="#">DISASTERS<span style="color: #0B87C2">ALERT</span></a> -->
+                        </div>
+                        <div id="main-nav" class="navbar-collapse collapse">
+                            <ul id="menu-container" class="nav navbar-nav pull-right">
+                                <li><a href="">Map</a></li>
+                                <li><a href="">Get Involved</a></li>
+                                <li><a href="">About</a></li>
+                                <li><a href="">Contact</a></li>
+                                <li><a href="">Sign Up</a></li>
+                            </ul>
+                       </div><!--/.nav-collapse -->
+                     </div>
+                  </div>
             </div>
-        </div> <!-- /password -->
+        </div>
+        <div class="login">
+            <div class="container content">
+                 <div class="sidebar col-md-4 pull-right">
+                    <div class="facebook-signin">
+                        <h5>OR you can Sign In with your <b style="color: #333">Facebook Account</b>:</h5>
+                        <a class="fb-btn btn" href="/auth/facebook">
+                           <i class="icon-facebook"></i>
+                           FACEBOOK SIGNIN
+                        </a>
+                    </div>
+                  </div>
+                <div class="col-md-7">
+                    <h3>SIGN IN</h3>
+                    <form id="login-form" class="login" action="/login" method="post">
+                      <div class="login-fields">
+                        <div class="field">
+                          <div class="input-prepend">
+                                <input id="username" name="username"  class="form-control login" value="" type="username" placeholder="Username">
+                          </div>
+                        </div> <!-- /field -->
+                        
+                        <div class="field">
+                            <div class="input-prepend">
+                                <input id="password" name="password" class="form-control login" value="" type="password" placeholder="Password">
+                            </div>
+                        </div> <!-- /password -->
+                        
+                      </div> <!-- /login-fields -->
+                      <div class="login-extra col-md-9">
+                        <div><a href="/forgot-password">Forgot Password?</a></div>
+                        <div>Don't have an Account yet? <a class="register-btn" href="/register" style="cursor:pointer">Sign up.</a></div>
+                      </div>
+                      <div class="login-actions col-md-3">
+                        <input type="submit" id="login-btn" class="btn button" value="LOGIN" />
+                      </div> <!-- .actions -->
+                    </form>
+                 </div>
+            </div>
+         </div>
         
-      </div> <!-- /login-fields -->
-      <div class="login-extra col-md-9 no-padding">
-        <div><a href="/forgot-password">Forgot Password?</a></div>
-        <div>Don't have an Account yet? <a class="register-btn" href="/register" style="cursor:pointer">Sign up.</a></div>
-      </div>
-      <div class="login-actions pull-right">
-        <input type="submit" class="btn button" value="LOGIN" />
-      </div> <!-- .actions -->
-    </form>
-</div>
+        <div id="footer" class="container content">
+               <div class="col-sm-3 col-md-3">
+                   <h4>RELATED LINKS</h4>
+                   <ul>
+                       <li><a>Disaster Alert</a></li>
+                       <li><a>Help</a></li>
+                       <li><a>Legend</a></li>
+                       <li><a><i class="icon-facebook-sign"></i> Facebook</a></li>
+                   </ul>
+               </div>         
+               <div class="col-sm-5 col-md-5">
+                   <h4 id="appname">ABOUT A.I.D</h4>
+                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit nibh suscipit venenatis facilisis. Nam eget felis 
+                   eget nisi pellentesque porta sed non tortor. Phasellus faucibus erat nec sem sodales, et bibendum tellus iaculis. Integer sit 
+                   amet diam et sem vestibulum lobortis in sed nulla. Donec lobortis vehicula tortor, at fringilla erat fringilla nec. </p>
+               </div>         
+               <div class="col-sm-4 col-md-4 hidden-xs">
+                   <h4>TEAM DIO</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit nibh suscipit venenatis facilisis. Nam eget felis 
+                   eget nisi pellentesque porta sed non tortor. Phasellus faucibus erat nec sem sodales, et bibendum tellus iaculis.</p>
+               </div>         
+            </div>
+        </div>
+    </body>
+</html>
