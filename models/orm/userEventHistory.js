@@ -3,29 +3,31 @@
 **/
 module.exports = function(db) {
   
-  var UserEventHistory = db.define('user_event_history', {
-    status    : { type: 'enum', values: ['UNREAD', 'READ']},
-    note      : { type: 'text', big: true },
-    created   : { type: 'date', time: true },
-    updated   : { type: 'date', time: true }
+  var EventHistory = db.define('user_event_history', {
+    title         : { type: 'text', size: 500, required: true },
+    description   : { type: 'text', big: true },
+    created       : { type: 'date', time: true },
+    latitude    : { type: 'text', size: 255, required: true },
+    longtitude  : { type: 'text', size: 255, required: true }
   }, {
     methods: {
       // methods here
     }
   });
 
-  var User = require('./user')(db);
-  var EventHistory = require('./eventHistory')(db);
+  var Event = require('./event')(db);
 
-  UserEventHistory.hasOne('user', User, { reverse: 'user_event_histories', required: true });
+  var EventLevel = require('./eventLevel')(db);
 
-  UserEventHistory.hasOne('event_history', EventHistory, { reverse: 'user_event_histories', required: true });
+  EventHistory.hasOne('event', Event, { reverse: 'event_histories', required: true });
+
+  EventHistory.hasOne('event_level', Event, { reverse: 'event_histories', required: true });
 
   // create table
-  UserEventHistory.sync(function(err) {
+  EventHistory.sync(function(err) {
   
   });
 
   
-  return UserEventHistory;
+  return EventHistory;
 }
