@@ -13,6 +13,8 @@
     "orm": "2.1.1",
     "passport": "latest",
     "passport-local": "latest",
-    "passport-facebook": "latest"
+    "passport-facebook": "latest",
+    "connect-flash": "latest",
+    "express-flash": "latest"
   }
 }

@@ -1,3 +1,3 @@
 exports.config = require('./config');
 exports.db = require('./db');
-exports.authentication = require('./authentication');
+//exports.authentication = require('./authentication');
