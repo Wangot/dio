@@ -50,152 +50,127 @@ app.configure(function () {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  // var Authorization = new utilities.authorization(app)
-  // Authorization.run()
+  var LocalStrategy = require('passport-local').Strategy;
 
-  //var Authentication = new utilities.authentication(app, passport);
-  //Authentication.run();
-
-var LocalStrategy = require('passport-local').Strategy;
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username }, function(err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
-
-
-
-
-
-
-
-
-
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-  console.log(user);
-});
-
-passport.deserializeUser(function(id, done) {
-  var User = require(path.resolve('./models/orm/user'))(ormDB);
-
-  User.get(id, function(err, user) {
-    if (err) {
-      done(null, false, { message: 'Invalid Credentials' });
-    } else {
-      done(null, user);
+  passport.use(new LocalStrategy(
+    function(username, password, done) {
+      User.findOne({ username: username }, function(err, user) {
+        if (err) { return done(err); }
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+        if (!user.validPassword(password)) {
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+        return done(null, user);
+      });
     }
+  ));
+
+  passport.serializeUser(function(user, done) {
+    done(null, user.id);
+    console.log(user);
   });
-});
 
-var LocalStrategy = require('passport-local').Strategy;
-passport.use(new LocalStrategy({
-    usernameField: 'username',
-    passwordField: 'password'
-  },
-  function(username, password, done) {
+  passport.deserializeUser(function(id, done) {
     var User = require(path.resolve('./models/orm/user'))(ormDB);
-    User.find({ username: username }, function(err, user) {
-      if (err) { 
-        return done(err); 
-      }
-      
-      // user result is in array format so we get only the first array result
-      if (!user[0]) {
-        return done(null, false, { message: 'The email or password you entered is incorrect.' });
-      }
-      
-      // encrypt the passed password then compare
-      var encryptedPassword = User.encryptPassword(password);
-      if(user[0].password != encryptedPassword) {
-        return done(null, false, { message: 'The email or password you entered is incorrect.' });
-      } else if (user[0].status == 'INACTIVE') {
-        return done(null, false, { message: 'The user is either invalid or deactivated.' });
+
+    User.get(id, function(err, user) {
+      if (err) {
+        done(null, false, { message: 'Invalid Credentials' });
       } else {
-        var userInstance = { 
-          id: user[0].id,
-          username: user[0].username,
-          password: user[0].password,
-          displayName: user[0].displayName
-        };
+        done(null, user);
+      }
+    });
+  });
+
+  var LocalStrategy = require('passport-local').Strategy;
+  passport.use(new LocalStrategy({
+      usernameField: 'username',
+      passwordField: 'password'
+    },
+    function(username, password, done) {
+      var User = require(path.resolve('./models/orm/user'))(ormDB);
+      User.find({ username: username }, function(err, user) {
+        if (err) { 
+          return done(err); 
+        }
         
-        return done(null, userInstance);
-      }
+        // user result is in array format so we get only the first array result
+        if (!user[0]) {
+          return done(null, false, { message: 'The email or password you entered is incorrect.' });
+        }
+        
+        // encrypt the passed password then compare
+        var encryptedPassword = User.encryptPassword(password);
+        if(user[0].password != encryptedPassword) {
+          return done(null, false, { message: 'The email or password you entered is incorrect.' });
+        } else if (user[0].status == 'INACTIVE') {
+          return done(null, false, { message: 'The user is either invalid or deactivated.' });
+        } else {
+          var userInstance = { 
+            id: user[0].id,
+            username: user[0].username,
+            password: user[0].password,
+            displayName: user[0].displayName
+          };
+          
+          return done(null, userInstance);
+        }
+        
+      });
+    }
+  ));
+  /*
+  var FacebookStrategy = require('passport-facebook').Strategy;
+  passport.use(new FacebookStrategy({
+      clientID: config.facebookApp.appID,
+      clientSecret: config.facebookApp.appSecret,
+      callbackURL: config.facebookApp.callbackURL,
+      passReqToCallback: true
+    },
+    function(req, accessToken, refreshToken, profile, done) {
+      var Q = require('q');
+      var User = require(path.resolve('./models/orm/user'))(ormDB);
+      var Authentication = require(path.resolve('./models/orm/authentication'))(ormDB);
+
+      var userService = require(path.resolve('./models/service/userService'));
       
-    });
-  }
-));
-/*
-var FacebookStrategy = require('passport-facebook').Strategy;
-passport.use(new FacebookStrategy({
-    clientID: config.facebookApp.appID,
-    clientSecret: config.facebookApp.appSecret,
-    callbackURL: config.facebookApp.callbackURL,
-    passReqToCallback: true
-  },
-  function(req, accessToken, refreshToken, profile, done) {
-    var Q = require('q');
-    var User = require(path.resolve('./models/orm/user'))(ormDB);
-    var Authentication = require(path.resolve('./models/orm/authentication'))(ormDB);
+      var me;
+      Q.ninvoke(Authentication, 'find', {provider: profile.provider, uid: profile.id})
+      .then(function(users) {
+        // if users not found, register 'em;
+        if (users.length == 0) {
+          Q.ninvoke(userService, 'registerFB', accessToken, refreshToken, profile, ormDB)
+          .then(function(data) {
+            req.myRedirect = '/template/gallery';
+            done(null, data.user);
+          })
+          .fail(function(err) {
+            console.log(err, err.stack);
+            done(new Error('Cannot register user.'))
+          });
+        } else if (users.length == 1) {
+          var fbAuth = users[0];
 
-    var userService = require(path.resolve('./models/service/userService'));
-    
-    var me;
-    Q.ninvoke(Authentication, 'find', {provider: profile.provider, uid: profile.id})
-    .then(function(users) {
-      // if users not found, register 'em;
-      if (users.length == 0) {
-        Q.ninvoke(userService, 'registerFB', accessToken, refreshToken, profile, ormDB)
-        .then(function(data) {
-          req.myRedirect = '/template/gallery';
-          done(null, data.user);
-        })
-        .fail(function(err) {
+          User.get(fbAuth.user_id, function(err, xUser) {
+            me = xUser;
+            done(err, me);
+          });
+
+        } else {
           console.log(err, err.stack);
-          done(new Error('Cannot register user.'))
-        });
-      } else if (users.length == 1) {
-        var fbAuth = users[0];
+          done(new Error('Invalid authentication data.'));
+        }
+      })
+      .fail(function(err) {
+        done(err);
+      });
 
-        User.get(fbAuth.user_id, function(err, xUser) {
-          me = xUser;
-          done(err, me);
-        });
+    }
+  ));
 
-      } else {
-        console.log(err, err.stack);
-        done(new Error('Invalid authentication data.'));
-      }
-    })
-    .fail(function(err) {
-      done(err);
-    });
-
-  }
-));
-
-*/
-
-
-
-
-
-
-
-
-
-
+  */
 
   // development only
   if ('development' == app.get('env')) {
