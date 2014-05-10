@@ -19,10 +19,9 @@ exports.attachHandlers = function attachHandlers (server) {
 
     // Authentication
     require("./auth")(server);
-    
-    server.get('/dbSync', dbSync);
 
     server.get('/testAPI', testAPI);
+
 };
 
 var index = function(req, res){
@@ -34,7 +33,6 @@ var index = function(req, res){
 };
 
 
-<<<<<<< HEAD
 var isAuth = function(req, res, next){
   if (req.isAuthenticated()) {
     // Auth
@@ -43,28 +41,6 @@ var isAuth = function(req, res, next){
   }
   next();
 }; 
-=======
-  var User = require(path.join(modelsPath, '/user'))(req.db);
-  var Contact = require(path.join(modelsPath, '/contact'))(req.db);
-  var Event = require(path.join(modelsPath, '/event'))(req.db);
-  var EventHistory = require(path.join(modelsPath, '/eventHistory'))(req.db);
-  var Location = require(path.join(modelsPath, '/location'))(req.db);
-  var EventLocation = require(path.join(modelsPath, '/eventLocation'))(req.db);
-  var Field = require(path.join(modelsPath, '/field'))(req.db);
-  var EventField = require(path.join(modelsPath, '/eventField'))(req.db);
-  var UserEventHistory = require(path.join(modelsPath, '/userEventHistory'))(req.db);
-  var UserAlertSetting = require(path.join(modelsPath, '/userAlertSetting'))(req.db);
-
-  var Article = require(path.join(modelsPath, '/article'))(req.db);
-  var EventArticle = require(path.join(modelsPath, '/eventArticle'))(req.db);
-  var Attachment = require(path.join(modelsPath, '/attachment'))(req.db);
-  var ArticleAttachment = require(path.join(modelsPath, '/articleAttachment'))(req.db);
-  var Media = require(path.join(modelsPath, '/media'))(req.db);
-  var EventMedia = require(path.join(modelsPath, '/eventMedia'))(req.db);
-
-
-  res.render('public/site/index', { title: 'Express' });
-}
 
 var testAPI = function(req, res) {
   var path = require('path');
@@ -75,4 +51,3 @@ var testAPI = function(req, res) {
   });
 
 }
->>>>>>> update dio mysql password
