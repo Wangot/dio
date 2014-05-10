@@ -21,5 +21,6 @@
     "appID": "759219867442538",
     "appSecret": "21f68c689700cefb9c38b95553a82469",
     "callbackURL": "http://localhost:3000/auth/facebook/cb"
-  }
+  },
+  "baseUrl": "http://localhost:3000"
 }

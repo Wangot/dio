@@ -7,14 +7,76 @@ var modelsPath = path.resolve('./models/orm');
 var message = require(path.resolve('./library/dio/utilities/message'));
 var dateformat = require('dateformat');
 
+var utilities = require(path.resolve('./library/dio/utilities'));
+
+var config = utilities.config.load('config', 'config');
+
 module.exports = {
   create: function(req, res) {
     var UserEventHistory = require(path.join(modelsPath, '/userEventHistory'))(req.db);
     var eventDetails = this.formatBeforeCreate(req.body);
+    var Contact = require(path.join(modelsPath, '/contact'))(req.db);
+    var UserAlertSetting = require(path.join(modelsPath, '/userAlertSetting'))(req.db);
+
+    var mailer = require(path.resolve("./models/service/email.js"));
+    var servicePath = path.resolve('./', 'models', 'service');
+    var serviceSMSAPI = require(servicePath + '/sms_API.js');
+    var eventcreated;
 
     Q.ninvoke(UserEventHistory, 'create', eventDetails)
     .then(function(createdEvent){
-      return res.send(new ApiReturn(true, createdEvent, message.DATA_SUCCESSFULLY_CREATED, eventDetails));
+      eventcreated = createdEvent;
+      // get contact of the user
+      return Q.ninvoke(UserAlertSetting, 'find', {
+        user_id: createdEvent.user_id, 
+        event_id: createdEvent.event_id,
+        type:'HELP'
+      })
+    })
+    .then(function(userAlertSettings){
+      if (userAlertSettings.length > 0) {
+        var promises = [];
+        for (var i=0; i<userAlertSettings.length; i++) {
+          var alertUser = function(alertSetting){
+            return Q.ninvoke(Contact, 'get', alertSetting.contact_id)
+            .then(function(contact) {
+
+              // compose location url
+              var mapUrl = config.baseUrl +'/assist/'+ eventcreated.event_id +'/' +eventcreated.id;
+              // compose message
+              var message = "NOTE :"+eventcreated.note ; // TODO
+
+              switch(contact.type) {
+                case 'MOBILE_NUMBER':
+                case 'OTHERS_MOBILE_NUMBER':
+                  serviceSMSAPI.sendSMS_TWILLIO(message, function(err, data) {
+                    // sucessfully sent
+                  });
+                  break;
+                case 'EMAIL':
+                case 'OTHERS_EMAIL':
+                  mailer.send(contact.value, "Assistance In Disaster [NEED HELP]", message +" Last Seen : "+mapUrl, "");
+                  break;
+                default:
+                  break;
+              }
+              return Q.ninvoke(Contact, 'get', contact.id);
+            })
+            .fail(function(err) {
+              throw new Error('Invalid User Package data.');
+            });
+          }
+          var myPromise = alertUser(userAlertSettings[i]);
+          promises.push(myPromise);
+        }
+        return Q.all(promises);
+      } else {
+        return true;
+      }
+
+    })
+    .then(function(createdEvent){
+      return res.send(new ApiReturn(true, eventcreated, message.DATA_SUCCESSFULLY_CREATED, eventDetails));
     })
     .fail(function(err) {
       console.log(err);

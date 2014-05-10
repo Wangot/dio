@@ -16,5 +16,6 @@
     "appID": "759219867442538",
     "appSecret": "21f68c689700cefb9c38b95553a82469",
     "callbackURL": "http://team-dio.azurewebsites.net/auth/facebook/cb"
-  }
+  },
+  "baseUrl": "http://team-dio.azurewebsites.net"
 }
