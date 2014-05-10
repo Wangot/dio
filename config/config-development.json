@@ -8,8 +8,8 @@
     "password": "dev+dio"
   },
   "sms": {
-	"code" : "2A5T7uG3",
-	"token" : "LGmwLtMEYoesBFl0m6OJH7ZH1ubv",
-	"refresh_token" : "ZTZzpjWOI2gWtzp428QU2Tucb9q3brHy"
+  	"code" : "2A5T7uG3",
+  	"token" : "LGmwLtMEYoesBFl0m6OJH7ZH1ubv",
+  	"refresh_token" : "ZTZzpjWOI2gWtzp428QU2Tucb9q3brHy"
   }
 }
