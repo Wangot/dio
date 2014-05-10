@@ -6,13 +6,11 @@ module.exports = function(req, res){
   var Contact = require(path.join(modelsPath, '/contact'))(req.db);
   var Event = require(path.join(modelsPath, '/event'))(req.db);
   var EventHistory = require(path.join(modelsPath, '/eventHistory'))(req.db);
-  var Location = require(path.join(modelsPath, '/location'))(req.db);
-  var EventLocation = require(path.join(modelsPath, '/eventLocation'))(req.db);
   var Field = require(path.join(modelsPath, '/field'))(req.db);
   var EventField = require(path.join(modelsPath, '/eventField'))(req.db);
   var UserEventHistory = require(path.join(modelsPath, '/userEventHistory'))(req.db);
   var UserAlertSetting = require(path.join(modelsPath, '/userAlertSetting'))(req.db);
-
+  var EventLevel = require(path.join(modelsPath, '/eventLevel'))(req.db);
   var Article = require(path.join(modelsPath, '/article'))(req.db);
   var EventArticle = require(path.join(modelsPath, '/eventArticle'))(req.db);
   var Attachment = require(path.join(modelsPath, '/attachment'))(req.db);

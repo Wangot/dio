@@ -52,5 +52,4 @@ var testAPI = function(req, res) {
   serviceNoahAPI.getFourHourForeCast(function(err, data) {
     res.json(200, data);
   });
-
 }

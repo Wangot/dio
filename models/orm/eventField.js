@@ -4,7 +4,7 @@
 module.exports = function(db) {
   
   var EventField = db.define('event_field', {
-    description      : { type: 'text', big: true }
+    value      : { type: 'text', big: true }
   }, {
     methods: {
       // methods here

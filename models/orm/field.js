@@ -12,6 +12,10 @@ module.exports = function(db) {
     }
   });
 
+  var Event = require('./event')(db);
+
+  Field.hasOne('event', Event, { reverse: 'fields', required: true });
+
   // create table
   Field.sync(function(err) {
   
