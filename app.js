@@ -21,7 +21,7 @@ app.use(function (req, res, next) {
 // Application environment settings
 app.set('port', process.env.PORT || 3000); // port to be use
 app.set('views', path.join(__dirname, 'views')); // routes for views
-var engine = require('ejs-locals'); // view engine 
+var engine = require('ejs-locals'); // view engine
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/views/resources'))); // resources
@@ -32,6 +32,8 @@ app.use(express.bodyParser());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 
+var passport = require('passport');
+
 app.configure(function () {
   // Other application environment settings
   app.use(express.favicon());
@@ -39,6 +41,19 @@ app.configure(function () {
   app.use(express.json());
   app.use(express.urlencoded());
   app.use(express.methodOverride());
+
+  /* AUTHENTICATION */
+
+  // using passport
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  // var Authorization = new utilities.authorization(app)
+  // Authorization.run()
+
+  var Authentication = new utilities.authentication(app, passport);
+  Authentication.run();
+
 
   // development only
   if ('development' == app.get('env')) {
