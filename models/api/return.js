@@ -1,6 +1,7 @@
 function ApiReturn(success, data, message, params) {
 	return {
-		success: success,
+		status: success ? "success" : "fail",
+		code: success ? 1 : 0,
 		data: data,
 		message: message,
 		params: params

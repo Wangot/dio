@@ -66,23 +66,21 @@ module.exports = {
       filterData.event_id = orm.eq(params.event);
     }
 
-    if (params.dateFrom && params.dateTo) {
-      if(params.dateFrom) {
-        var dateFrom = new Date(params.dateFrom);
-      } else {
-        var dateFrom = new Date();
-      }
-      dateFrom.setHours(0,0,0,0);
-
-      if(params.dateTo) {
-        var dateTo = new Date(params.dateTo);
-      } else {
-        var dateTo = new Date();
-      }
-      dateTo.setHours(23,59,59,59);
-
-      filterData.created = orm.between(dateformat(dateFrom, "yyyy-mm-dd H:MM:ss"), dateformat(dateTo, "yyyy-mm-dd H:MM:ss"));
+    if(params.dateFrom) {
+      var dateFrom = new Date(params.dateFrom);
+    } else {
+      var dateFrom = new Date();
     }
+    dateFrom.setHours(0,0,0,0);
+
+    if(params.dateTo) {
+      var dateTo = new Date(params.dateTo);
+    } else {
+      var dateTo = new Date();
+    }
+    dateTo.setHours(23,59,59,59);
+
+    filterData.created = orm.between(dateformat(dateFrom, "yyyy-mm-dd H:MM:ss"), dateformat(dateTo, "yyyy-mm-dd H:MM:ss"));
 
     return filterData; 
   },

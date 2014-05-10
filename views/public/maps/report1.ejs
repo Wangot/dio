@@ -12,34 +12,15 @@
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWOlwKkkrv_9ZfMcySRcsNQeKGACHpEA4&sensor=true&libraries=visualization">
 </script>
 <script type="text/javascript">
+// Set to global
+var map;
+var markers = [];
+var heatPoints = [];
+
   function initialize() {
-        var locations = [
-        {
-            lat:14.5834, 
-            lng:120.986, 
-            address:'15 United Nations Ave, Manila, Philippines',
-            title:'Title',
-            descr:'15 United Nations Ave, Manila, Philippines Description'           
-        }, 
-         {
-            lat:14.5608, 
-            lng:121.078, 
-            address:'Caruncho Ave, Pasig City, Philippines',
-            title:'Caruncho Ave, Pasig City, Philippines Title',
-            descr:'Description'           
-        },       
-         {
-            lat:14.5298, 
-            lng:121.034, 
-            address:'Lawton Ave, Taguig City, Philippines',
-            title:'Title Lawton Ave, Taguig City, Philippines',
-            descr:'Lawton Ave, Taguig City, Philippines Description'           
-        }      
-                   
-    ];
     
     var latLng = new google.maps.LatLng(14.559, 121.017);
-    
+
     var mapOptions = {
         center: latLng,
         zoom: 9,
@@ -49,17 +30,56 @@
         streetViewControl: false
     };
     
-    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-        
+    map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+
+    // Add points using user events
+
+      loadUserEvents();
+
+
+    //addMapPoint(map);
+
+
+
+ }   
+ 
+ google.maps.event.addDomListener(window, 'load', initialize);
+
+ function loadUserEvents () {
+   $.ajax({
+      url: "/api/user_events",
+      dataType: "json",
+      success: function(jsonData){
+        if(jsonData.code == 1){
+          var userEvents = jsonData.data;
+          var map = 
+          userEvents.forEach(function(userEvent) {
+            addMapPoint(userEvent)
+          });
+
+        } else {
+          alert(jsonData.message);
+        }
+      }
+   });
+ }
+
+
+
+  function addMapPoint(userEvent) {
+
+    var latLng = new google.maps.LatLng(userEvent.latitude, userEvent.longitude);
+
+    //TODO: create a template for this
     var content = '<div id="content">'+
       '<div id="siteNotice">'+
       '</div>'+
-      '<h4 style="font-size: 16px;margin-bottom: 5px;">Caruncho Ave, Pasig City, Philippines</h4>'+
-      '<p style="font-style: italic;font-weight: 400;font-size: 10px;">As of May 11, 2014</p>'+
+      '<h4 style="font-size: 16px;margin-bottom: 5px;">'+ userEvent.title +'</h4>'+
+      '<p style="font-style: italic;font-weight: 400;font-size: 10px;">'+ userEvent.created +'</p>'+
       '<div id="bodyContent">'+
-      '<ul><li><b>Flood Hazard:</b>' +
-      'Heritage Site.</li>'+
-      '<li><b>Description:</b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed risus rutrum, tincidunt lorem nec, tincidunt dui. Mauris pulvinar luctus est suscipit auctor.' +
+      '<ul><li><b>Hazard/Disaster Type: </b>' + userEvent.event+
+      '<li><b>Description: </b>'+ userEvent.description +
       '</li></div>'+
       '</div>';
       
@@ -70,16 +90,49 @@
     var marker = new google.maps.Marker({
         position: latLng,
         map: map,
-        icon: 'public/images/disasters/flood.png',
+        icon: 'public/images/disasters/'+ getIconByIdEvent(userEvent.eventId),
      });
      
+    markers.push(marker);
+
      google.maps.event.addListener(marker, 'click', function() {
         infowindow.open(map,marker);
       });
+  }
 
- }   
+  function getIconByIdEvent(id) {
+    var icon = "";
+    switch(id){
+      case 1: icon = "flood.png";
+        break;
+      default: icon = "flood.png";
+    }
+    return icon;
+  }
 
-  google.maps.event.addDomListener(window, 'load', initialize);
+// Sets the map on all markers in the array.
+function setAllMap(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+  setAllMap(null);
+}
+
+// Shows any markers currently in the array.
+function showMarkers() {
+  setAllMap(map);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  clearMarkers();
+  markers = [];
+}
+
 </script>
 
 
