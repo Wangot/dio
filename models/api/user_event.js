@@ -85,14 +85,15 @@ module.exports = {
   },
   formatBeforeCreate: function(rawParams) {
     return {
-      title:rawParams.name,
+      title:rawParams.title,
       description:rawParams.description,
       latitude:rawParams.latitude,
       longitude:rawParams.longitude,
       event_id:rawParams.event_id,
       status:rawParams.status,
       event_level_id:rawParams.event_level_id,
-      note:rawParams.note || ''
+      note:rawParams.note || '',
+      user_id:rawParams.user_id
     };
   }
 }

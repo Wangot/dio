@@ -88,7 +88,7 @@ module.exports = {
   },
   formatBeforeCreate: function(rawParams) {
     return {
-      title:rawParams.name,
+      title:rawParams.title,
       description:rawParams.description,
       latitude:rawParams.latitude,
       longitude:rawParams.longitude,

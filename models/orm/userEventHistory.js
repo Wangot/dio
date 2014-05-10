@@ -22,9 +22,13 @@ module.exports = function(db) {
 
   var EventLevel = require('./eventLevel')(db);
 
+  var User = require('./user')(db);
+
   UserEventHistory.hasOne('event', Event, { reverse: 'user_event_histories', required: true});
 
   UserEventHistory.hasOne('event_level', EventLevel, { reverse: 'user_event_histories', required: true});
+
+  UserAlertSetting.hasOne('user', User, { reverse: 'user_event_histories', required: true });
 
   // create table
   UserEventHistory.sync(function(err) {
