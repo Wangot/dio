@@ -10,10 +10,10 @@ module.exports = function(db) {
     latitude    : { type: 'text', size: 255, required: true },
     longtitude  : { type: 'text', size: 255, required: true }
   }, {
-    autoFetch : true,
     methods: {
       // methods here
-    }
+    },
+    autoFetch : true
   });
 
   var Event = require('./event')(db);
@@ -22,7 +22,7 @@ module.exports = function(db) {
 
   EventHistory.hasOne('event', Event, { reverse: 'event_histories', required: true });
 
-  EventHistory.hasOne('event_level', Event, { reverse: 'event_histories', required: true });
+  EventHistory.hasOne('event_level', EventLevel, { reverse: 'event_histories', required: true });
   
   // create table
   EventHistory.sync(function(err) {

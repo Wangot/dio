@@ -71,8 +71,8 @@ INSERT INTO `event_field` (`id`, `event_id`, `event_history_id`, `field_id`, `va
 (51, 3, 15, 9, '6:06 pm');
 
 INSERT INTO `event_history` (`id`, `event_id`, `event_level_id`, `title`, `created`) VALUES
-(1, 1, 1, 'Seismologic Sample', '2013-08-13 15:10:20'),
-(2, 2, 9, 'Volcanic Sample', '2013-08-13 23:20:28'),
+(1, 1, 1, 'Seismologic Sample', '2014-05-11 15:10:20'),
+(2, 2, 9, 'Volcanic Sample', '2013-05-10 23:20:28'),
 (3, 3, 15, 'Weather Sample', '2013-08-14 00:40:36'),
 (4, 4, 20, 'Climate Sample', '2013-08-14 00:20:21'),
 (5, 2, 10, 'Volcanic Sample', '2013-09-13 11:18:36'),
