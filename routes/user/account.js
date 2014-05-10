@@ -31,10 +31,10 @@ module.exports = function(server) {
       })
       .then(function(settings){
         // compose disaster
-        // var formattedDisasters = {};
-        // settings.forEach(function(setting){
+        var formattedDisasters = {};
+        settings.forEach(function(setting){
 
-        // })
+        })
         return true;
       })
       .then(function(isSuccess){
