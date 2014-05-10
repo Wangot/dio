@@ -4,4 +4,6 @@ module.exports = function(server) {
     require('./register')(server);
 
     require('./logout')(server);
+
+    require('./facebook')(server);
 };

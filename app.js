@@ -123,7 +123,7 @@ app.configure(function () {
       });
     }
   ));
-  /*
+
   var FacebookStrategy = require('passport-facebook').Strategy;
   passport.use(new FacebookStrategy({
       clientID: config.facebookApp.appID,
@@ -145,7 +145,7 @@ app.configure(function () {
         if (users.length == 0) {
           Q.ninvoke(userService, 'registerFB', accessToken, refreshToken, profile, ormDB)
           .then(function(data) {
-            req.myRedirect = '/template/gallery';
+            req.myRedirect = '/dashboard';
             done(null, data.user);
           })
           .fail(function(err) {
@@ -166,13 +166,12 @@ app.configure(function () {
         }
       })
       .fail(function(err) {
+        console.log(err);
         done(err);
       });
 
     }
   ));
-
-  */
 
   // development only
   if ('development' == app.get('env')) {

@@ -65,6 +65,24 @@ module.exports = function(db) {
     var delimiter = '_';
     return email.replace('@', delimiter);
   };
+
+  User.appendToUsername = function(username) {
+
+    var subjectTime = new Date().getTime();
+    var appendSize = 6;
+
+    // hash it
+    var subject = username + '-' + subjectTime;
+    var crypto = require('crypto');
+    append = crypto.createHash('md5').update(subject).digest('hex');
+
+    // substring it if it's too long
+    if (append.length > appendSize) {
+      append = append.substring(0, appendSize);
+    }
+
+    return username + '.' + append;
+  };
   
   return User;
 }
