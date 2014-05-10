@@ -36,8 +36,26 @@ module.exports = {
       }
 
       // FORMAT the data to be returned
+      var arrTemp = [];
+      events.forEach(function(event){
+        console.log(event);
+        var temp = {
+          id: event.id,
+          title: event.title,
+          description: event.description,
+          created: event.created,
+          "event": event.Event.name,
+          eventId: event.Event.id,
+          eventDescription: event.Event.description,
+          latitude: event.latitude,
+          longitude: event.longitude
 
-      res.send(new ApiReturn(true, events, "", params));
+        };
+
+        arrTemp.push(temp);
+      });
+
+      res.send(new ApiReturn(true, arrTemp, "", params));
     });
 
   },
