@@ -19,7 +19,7 @@
       Email address:
       </label>
       <div class="col-md-10">
-      <input type="email" class="form-control" id="emailaddress" placeholder="Enter email address">
+      <input type="email" name="email" class="form-control" id="emailaddress" placeholder="Enter email address">
       <p class="help-block">
         Example: yourname@domain.com
       </p>
@@ -31,7 +31,7 @@
       Password:
       </label>
       <div class="col-md-10">
-      <input type="password" class="form-control" id="password" placeholder="Enter Password">
+      <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password">
       <p class="help-block">
         Min: 6 characters (Alphanumeric only)
       </p>
@@ -58,7 +58,7 @@
       <label class="col-md-2">My Contacts:</label>
       <div class="col-md-10" id="my-contacts">
         <input type='button' value='Add Mobile Number' onClick="addContact('MOBILE_NUMBER', false)" />
-        <input type='button' value='Add Email Address' onClick="addContact('EMAIL', false)" />
+        <input type='button' value='Add Email Address' onClick="addContact('EMAILS', false)" />
       </div>
     </div>
 
@@ -143,7 +143,7 @@ $(document).ready(function() {
     if (type == 'MOBILE_NUMBER' || type == 'OTHERS_MOBILE_NUMBER') {
       helpBlock = 'Example: 09191234567';
       placeholder = 'Mobile Number';
-    } else if (type == 'EMAIL' || type == 'OTHERS_EMAIL') {
+    } else if (type == 'EMAILS' || type == 'OTHERS_EMAIL') {
       helpBlock = 'Example: email@domain.com';
       placeholder = 'Email Address';
     }

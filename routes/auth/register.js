@@ -36,6 +36,7 @@ module.exports = function(server) {
 	  var postData = req.body;
     var db = req.db;
     var User = require(path.join(modelsPath, '/user'))(db);
+    var Contact = require(path.join(modelsPath, '/contact'))(db);
 
     // process starts here
     Q.ninvoke(User, 'count', { email: postData.email })
@@ -100,7 +101,8 @@ module.exports = function(server) {
       }];
 
       Q.ninvoke(User, 'create', userData)
-      .then(createUserAlertSetting)
+      .then(createContacts)
+      // .then(createContacts)
       .then(function(data) {
         req.flash('success', successMessage);
         var redirectUrl = '/dashboard';
@@ -128,10 +130,68 @@ module.exports = function(server) {
       });
     }
 
-    function createUserAlertSetting(user) {
+    function createContacts(users) {
+      var contactData = [];
+      var user = users[0];
+      if (postData.MOBILE_NUMBER && postData.MOBILE_NUMBER.length > 0) {
+        var mobileNumbers = postData.MOBILE_NUMBER;
+        for (var i = 0; i < mobileNumbers.length; i++) {
+          var formattedData = {
+            type: 'MOBILE_NUMBER',
+            value: mobileNumbers[i],
+            user_id: user.id
+          };
+          contactData.push(formattedData);
+        };
+      };
 
-      // con
-      // Q.ninvoke(UserAlertSetting,'create', )
+      if (postData.EMAILS && postData.EMAILS.length > 0) {
+        var emails = postData.EMAILS;
+        for (var i = 0; i < emails.length; i++) {
+          var formattedData = {
+            type: 'EMAIL',
+            value: emails[i],
+            user_id: user.id
+          };
+
+          contactData.push(formattedData);
+        };
+      };
+
+      if (postData.OTHERS_MOBILE_NUMBER && postData.OTHERS_MOBILE_NUMBER.length > 0) {
+        var mobileNumbers = postData.OTHERS_MOBILE_NUMBER;
+        for (var i = 0; i < mobileNumbers.length; i++) {
+          var formattedData = {
+            type: 'OTHERS_MOBILE_NUMBER',
+            value: mobileNumbers[i],
+            user_id: user.id
+          };
+          
+          contactData.push(formattedData);
+        };
+      };
+
+      if (postData.OTHERS_EMAIL && postData.OTHERS_EMAIL.length > 0) {
+        var emails = postData.OTHERS_EMAIL;
+        for (var i = 0; i < emails.length; i++) {
+          var formattedData = {
+            type: 'OTHERS_EMAIL',
+            value: emails[i],
+            user_id: user.id
+          };
+
+          contactData.push(formattedData);
+        };
+      };
+
+      Q.ninvoke(Contact,'create', contactData)
+      .then(function(contacts){
+        return true;
+      })
+      .fail(function(err) {
+        console.log(err);
+        throw new Error("Unable to create contacts.")
+      });
     }
 
     function sendResponse() {

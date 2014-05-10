@@ -5,7 +5,7 @@ module.exports = function(db) {
   
   var Contact = db.define('contact', {
     type          : { type: 'enum', values: ['EMAIL', 'MOBILE_NUMBER', 'OTHERS_EMAIL', 'OTHERS_MOBILE_NUMBER']},
-    values        : { type: 'text', big: true, required: true },
+    value         : { type: 'text', big: true, required: true },
     description   : { type: 'text', big: true },
     created       : { type: 'date', time: true },
     updated       : { type: 'date', time: true }
