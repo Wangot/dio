@@ -84,6 +84,7 @@
                     <span class="status-message">
                         <p>class="">Disasters: 
                             <select id="disaster">
+                                <option value="all">All</option>
                                 <option value="1">Disaster 1</option>
                                 <option value="2">Disaster 2</option>
                                 <option value="3">Disaster 3</option>
@@ -94,6 +95,13 @@
                         <p> between <input id="dateFrom" type="text" value="" /> - 
                             <input id="dateTo" type="text" value="" />
                             <input type="button" value="Update" onclick="loadUserEvents()" />
+                        </p>
+                            <select id="mapLayer" onchange="changeLayerDisplay()">
+                                <option value="marker">Reports</option>
+                                <option value="heatmap">Heat Map</option>
+                            </select>
+                        <p>
+
                         </p>
                         <script type="text/javascript">
                             $(function() {

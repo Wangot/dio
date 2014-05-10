@@ -37,7 +37,6 @@ module.exports = {
       // FORMAT the data to be returned
       var arrTemp = [];
       events.forEach(function(event){
-        console.log(event);
         var temp = {
           id: event.id,
           title: event.title,
@@ -62,7 +61,7 @@ module.exports = {
   filterList: function(params){
     var filterData = {};
 
-    if (params.event) {
+    if (params.event && params.event != "all") {
       filterData.event_id = orm.eq(params.event);
     }
 

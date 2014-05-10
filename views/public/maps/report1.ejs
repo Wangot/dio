@@ -15,7 +15,8 @@
 // Set to global
 var map;
 var markers = [];
-var heatPoints = [];
+var heatmap;
+var pointData = [];
 
   function initialize() {
     
@@ -54,10 +55,12 @@ var heatPoints = [];
       success: function(jsonData){
         if(jsonData.code == 1){
           var userEvents = jsonData.data;
-          var map = 
+          pointData = [];
           userEvents.forEach(function(userEvent) {
             addMapPoint(userEvent)
           });
+
+          populateHeatMap();
 
         } else {
           alert(jsonData.message);
@@ -66,10 +69,19 @@ var heatPoints = [];
    });
  }
 
+function populateHeatMap(){
+  var pointArray = new google.maps.MVCArray(pointData);
+  heatmap = new google.maps.visualization.HeatmapLayer({
+      data: pointArray
+    });
+}
 
+    
   function addMapPoint(userEvent) {
 
     var latLng = new google.maps.LatLng(userEvent.latitude, userEvent.longitude);
+    
+    pointData.push(latLng);
 
     //TODO: create a template for this
     var content = '<div id="content">'+
@@ -110,6 +122,21 @@ var heatPoints = [];
     return icon;
   }
 
+//
+function changeLayerDisplay() {
+  // alert($("#mapLayer").val())
+  switch($("#mapLayer").val()) {
+    case 'heatmap':
+        clearMarkers();
+        showHeatMap();
+      break
+    case 'marker':
+    default:
+      hideHeatMap();
+      showMarkers();
+  }
+}
+
 // Sets the map on all markers in the array.
 function setAllMap(map) {
   for (var i = 0; i < markers.length; i++) {
@@ -132,6 +159,15 @@ function deleteMarkers() {
   clearMarkers();
   markers = [];
 }
+
+function showHeatMap(){
+  heatmap.setMap(map);
+}
+
+function hideHeatMap(){
+  heatmap.setMap(null);
+}
+
 
 </script>
 
