@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+        <title>A.I.D.</title>
+        <meta name="generator" content="Bootply" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+        
+        <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">       
+        
+        <link rel="stylesheet" href="public/css/bootstrap-image-gallery.min.css"> 
+
+        <!--[if lt IE 9]>
+          <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" type="text/css" rel="stylesheet">
+
+
+        <!-- CSS code from Bootply.com editor -->
+        
+<style type="text/css">
+.navbar-form input, .form-inline input {
+  width:auto;
+}
+
+body {
+  padding-top:50px;
+}
+
+footer {
+  margin-top:40px;
+  padding-top:40px;
+  padding-bottom:40px;
+  background-color:#ededed;
+}
+
+
+#masthead {
+  min-height:199px;
+}
+
+#masthead h1 {
+  font-size: 55px;
+  line-height: 1;
+  margin-top:50px;
+}
+
+#masthead .well {
+  margin-top:31px;
+  min-height:127px;
+}
+
+.navbar.affix {
+  position:fixed;
+  top:0;
+  width:100%;
+}
+
+.story-img {
+  margin-top:25%;
+  display:block;
+}
+
+a,a:hover {
+  color:#223344;
+  text-decoration:none;
+}
+
+.icon-bar {
+  background-color:#fff;
+}
+
+@media screen and (min-width: 768px) {
+  #masthead h1 {
+    font-size: 80px;
+  }
+}
+
+.dropdown-menu {
+  min-width: 250px;
+}
+
+.panel {
+  border-color:transparent;
+  border-radius:0;
+}
+
+.thumbnail {
+  margin-bottom:8px;
+}
+
+.img-container {
+  overflow:hidden;
+  height:170px;
+}
+
+.img-container img {
+  min-width:280px;
+  min-height:180px;
+  max-width:380px;
+  max-height:280px;
+}
+
+.txt-container {
+  overflow:hidden;
+  height:100px;
+}
+
+.panel .lead {
+  overflow:hidden;
+  height:90px;
+}
+
+.label-float{
+  margin:0 auto;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  width:100%;
+  opacity:.9;
+  padding:6px;
+  color:#fff;
+}
+    
+.btn-twitter {background-color:#4099FF;color:#fff;}
+.btn-facebook {background-color:#3B5998;color:#fff;}
+.btn-google-plus {background-color:#d34836;color:#fff;}
+
+.btn-twitter:hover {background-color:#3088FF;color:#62BBFF;}
+.btn-facebook:hover {background-color:#2A4998;color:#4C6BBA;}
+.btn-google-plus:hover {background-color:#C23836;color:#E45A58;}
+
+#links a {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+}
+
+#links img {
+  max-width: 100%;
+  max-height: 100%;
+  position: relative;
+}
+
+</style>
+    </head>
+    
+    <!-- HTML code from Bootply.com editor -->
+    
+    <body  >
+        
+        <header class="navbar navbar-default navbar-fixed-top" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="/" class="navbar-brand">Home</a>
+    </div>
+    <nav class="collapse navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="#">Category</a>
+        </li>
+        <li>
+          <a href="#">Category</a>
+        </li>
+        <li>
+          <a href="#">Category</a>
+        </li>
+        <li>
+          <a href="#">Category</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-right navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-search"></i></a>
+          <ul class="dropdown-menu" style="padding:12px;">
+            <form class="form-inline">
+              <button type="submit" class="btn btn-default pull-right"><i class="glyphicon glyphicon-search"></i></button><input type="text" class="form-control pull-left" placeholder="Search">
+            </form>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div id="masthead">  
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10">
+        <h1>A.I.D. Disaster Feeds
+          <p class="lead">Assistance in Disaster</p>
+        </h1>
+      </div>
+      <div class="col-md-5">
+      </div>
+    </div> 
+  </div><!-- /cont -->
+  
+ 
+</div>
+
+
+<div class="container">
+  <div class="row">
+    
+    <div class="col-md-12"> 
+      
+      <div class="panel">
+        <div class="panel-body">
+        
+          
+          <% for (var i in articles) {%>
+            <div class="row">
+              <br/>
+                <div class="col-md-2 col-sm-3 text-center">
+                 <img src="<%= articles[i].google_image_link %>">
+                </div>
+                <div class="col-md-10 col-sm-9">
+                <h3><%= articles[i].title %></h3>
+                  <p>
+                    <%= articles[i].content %>
+                      </p>
+                      <div id="links">
+                         <% for (var ii in articles[i].images) { %>
+                            <a href="<%- articles[i].images[ii] %>" title="" data-gallery="blueimp<%= articles[i].id %>">
+                              <img src="<%- articles[i].images[ii] %>">
+                            </a>                        
+
+                         <% } %>
+                      </div>
+                  <br/>                 
+                  <p class="lead"><button class="btn btn-default">Read More</button></p>
+                  <p class="pull-right">
+                    <% for (var xx in articles[i].tags.split(',')) { %>
+                    <span class="label label-default"><%- articles[i].tags.split(',')[xx] %></span> 
+                    <% } %>
+                  </p>
+                  <ul class="list-inline"><li>
+                 </li><li><div class="fb-share-button" data-href="http://localhost:3000/disaster-feeds#<%= articles[i].id %>" data-type="button"></div></li></ul>
+
+                  <div class="fb-comments" data-href="http://localhost:3000/disaster-feeds#<%= articles[i].id %>" data-numposts="5" data-colorscheme="light"></div>                 
+                  </div>
+                <div class="col-xs-3"></div>
+              </div>
+              <br><br>
+            </div>
+          </div>
+          <hr>
+                  
+          <% } %>
+        <a href="/" class="btn btn-primary pull-right btnNext">More <i class="glyphicon glyphicon-chevron-right"></i></a>                      
+        </div>
+      </div>
+                                                                                       
+	                                                
+                                                      
+   	</div><!--/col-12-->
+  </div>
+</div>
+                                                
+                                                                                
+<hr>
+
+<div id="blueimp-gallery" class="blueimp-gallery">
+    <!-- The container for the modal slides -->
+    <div class="slides"></div>
+    <!-- Controls for the borderless lightbox -->
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+    <!-- The modal dialog, which will be used to wrap the lightbox content -->
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body next"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left prev">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                        Previous
+                    </button>
+                    <button type="button" class="btn btn-primary next">
+                        Next
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <ul class="list-inline">
+          <li><i class="icon-facebook icon-2x"></i></li>
+          <li><i class="icon-twitter icon-2x"></i></li>
+          <li><i class="icon-google-plus icon-2x"></i></li>
+          <li><i class="icon-pinterest icon-2x"></i></li>
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</footer>
+        
+        <script type='text/javascript' src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+        <script type='text/javascript' src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+
+        <script src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+        <!-- 
+        <script src="/public/js/bootstrap-image-gallery.min.js"></script>
+         -->
+
+        
+        <!-- JavaScript jQuery code from Bootply.com editor -->
+        
+        <script type='text/javascript'>
+        
+        $(document).ready(function() {
+        
+            
+        
+        });
+        
+
+        </script>
+        
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=759219867442538&version=v2.0";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+    </body>
+</html>

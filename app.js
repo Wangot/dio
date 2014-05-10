@@ -27,6 +27,7 @@ app.set('port', process.env.PORT || 3000); // port to be use
 app.set('views', path.join(__dirname, 'views')); // routes for views
 var engine = require('ejs-locals'); // view engine
 app.engine('ejs', engine);
+app.use("/public", express.static(__dirname + '/views/resources'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/views/resources'))); // resources
 

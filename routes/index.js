@@ -29,6 +29,7 @@ exports.attachHandlers = function attachHandlers (server) {
     server.post('/send/sms', sendSMS);
 
     require("./user")(server);    
+    require('./post_calamity')(server);
 };
 
 var index = function(req, res){

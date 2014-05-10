@@ -6,6 +6,8 @@ module.exports = function(db) {
   var Article = db.define('article', {
     title         : { type: 'text', size: 255, required: true },
     content  : { type: 'text', big: true },
+    tags  : { type: 'text', big: true },
+    google_image_link : { type: 'text', big: true },
     created       : { type: 'date', time: true },
     updated       : { type: 'date', time: true }
   }, {
