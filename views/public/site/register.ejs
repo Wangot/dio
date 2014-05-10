@@ -42,7 +42,7 @@
    
     <div class="form-group">
       <label class="col-md-2">
-      Disaster Type:
+      Check the box next to the disaster types that you would like to be notified about.
       </label>
       <div class="col-md-10">
         <ul class="chk-container">
@@ -53,7 +53,6 @@
         </ul>
       </div>
     </div>
-
     <div class="form-group">
       <label class="col-md-2">My Contacts:</label>
       <div class="col-md-10" id="my-contacts">
@@ -62,6 +61,19 @@
       </div>
     </div>
 
+    <div class="form-group">
+      <label class="col-md-2">
+      Check the box next to the disaster types that your relative would like to be notified about when you need a HELP.
+      </label>
+      <div class="col-md-10">
+        <ul class="chk-container">
+          <li><input type="checkbox" id="selecctall-disaster-relative"/> Select All</li>
+          <% for(x=0; x<disasters.length; x++) { %>
+            <li><input class="disaster-checkbox-relative" type="checkbox" name="disaster_relative[]" value="<%= disasters[x].id%>"><%= disasters[x].name%></li>
+          <% }%>
+        </ul>
+      </div>
+    </div>
     <div class="form-group">
       <label class="col-md-2">Relative Contacts:</label>
       <div class="col-md-10" id="relative-contacts">
@@ -106,6 +118,18 @@ $(document).ready(function() {
           });
       }else{
           $('.disaster-checkbox').each(function() { //loop through each checkbox
+              this.checked = false; //deselect all checkboxes with class "checkbox1"                       
+          });         
+      }
+  });
+
+  $('#selecctall-disaster-relative').click(function(event) {  //on click 
+      if(this.checked) { // check select status
+          $('.disaster-checkbox-relative').each(function() { //loop through each checkbox
+              this.checked = true;  //select all checkboxes with class "checkbox1"               
+          });
+      }else{
+          $('.disaster-checkbox-relative').each(function() { //loop through each checkbox
               this.checked = false; //deselect all checkboxes with class "checkbox1"                       
           });         
       }

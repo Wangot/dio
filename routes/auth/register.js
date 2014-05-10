@@ -197,6 +197,7 @@ module.exports = function(server) {
     function createUserAlertSetting(contacts) {
       var alertSettingData = []
 
+      // contacts and alerts for user
       if (contacts && contacts.length > 0 && 
           postData.disaster && postData.disaster.length > 0) {
         var disasters = postData.disaster;
@@ -207,29 +208,49 @@ module.exports = function(server) {
             var type;
             if (contact.type == 'MOBILE_NUMBER' || contact.type == 'EMAIL') {
               type = 'SYSTEM';
-            } else {
-              type = 'HELP';
+              alertSettingData.push({
+                event_id: disasters[i],
+                user_id:contact.user_id,
+                contact_id:contact.id,
+                type: type
+              });
             }
-
-            alertSettingData.push({
-              event_id: disasters[i],
-              user_id:contact.user_id,
-              contact_id:contact.id,
-              type: type
-            });
           })
 
         };
+      }; 
 
-        Q.ninvoke(UserAlertSetting,'create', alertSettingData)
-        .then(function(settings){
-          return settings;
-        })
-        .fail(function(err) {
-          console.log(err);
-          throw new Error("Unable to create settings.")
-        });
+      // contacts and alerts for user
+      if (contacts && contacts.length > 0 && 
+          postData.disaster_relative && postData.disaster_relative.length > 0) {
+        var disasters = postData.disaster_relative;
+
+        for (var i = 0; i < disasters.length; i++) {
+
+          contacts.forEach(function(contact){
+            var type;
+            if (contact.type == 'OTHERS_MOBILE_NUMBER' || contact.type == 'OTHERS_EMAIL') {
+              type = 'HELP';
+              alertSettingData.push({
+                event_id: disasters[i],
+                user_id:contact.user_id,
+                contact_id:contact.id,
+                type: type
+              });
+            }
+          })
+
+        };
       };      
+
+      Q.ninvoke(UserAlertSetting,'create', alertSettingData)
+      .then(function(settings){
+        return settings;
+      })
+      .fail(function(err) {
+        console.log(err);
+        throw new Error("Unable to create settings.")
+      });
 
     }
 
