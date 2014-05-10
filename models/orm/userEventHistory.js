@@ -16,6 +16,11 @@ module.exports = function(db) {
     autoFetch : true,
     methods: {
       // methods here
+    },
+    hooks : {
+      beforeCreate : function() {
+        var that = this;
+        that.created = new Date();
     }
   });
 

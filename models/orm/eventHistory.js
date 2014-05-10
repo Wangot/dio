@@ -13,7 +13,12 @@ module.exports = function(db) {
     methods: {
       // methods here
     },
-    autoFetch : true
+    autoFetch : true,
+    hooks : {
+      beforeCreate : function() {
+        var that = this;
+        that.created = new Date();
+    }
   });
 
   var Event = require('./event')(db);
