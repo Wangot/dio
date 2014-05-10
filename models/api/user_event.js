@@ -90,7 +90,7 @@ module.exports = {
       latitude:rawParams.latitude,
       longitude:rawParams.longitude,
       event_id:rawParams.event_id,
-      status:rawParams.status,
+      status:rawParams.status || 'NEW',
       event_level_id:rawParams.event_level_id,
       note:rawParams.note || '',
       user_id:rawParams.user_id
