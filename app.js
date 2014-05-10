@@ -10,6 +10,9 @@ var flash = require('express-flash');
 var app = express();
 
 var utilities = require('./library/dio/utilities');
+
+app.use(utilities.cors('*'));
+
 var config = utilities.config.load('config', 'config');
 
 // Database configuration
@@ -69,7 +72,6 @@ app.configure(function () {
 
   passport.serializeUser(function(user, done) {
     done(null, user.id);
-    console.log(user);
   });
 
   passport.deserializeUser(function(id, done) {

@@ -1,0 +1,163 @@
+<% layout('../layout') -%>
+<div class="account-container register">
+  
+  <div class="content clearfix">
+  <div class="header">
+    <a class="fb-btn btn" href="/auth/facebook">
+       <i class="icon-facebook"></i>
+       FACEBOOK SIGNUP
+    </a>
+    <div class="col-md-12">
+      <div class="line col-xs-4 col-sm-5 col-md-5"></div>
+      <span class="col-xs-4 col-sm-2 col-md-2" style="color: #c9c7c7">OR</span>
+      <div class="line col-xs-4 col-sm-5 col-md-5"></div> 
+    </div>
+  </div>
+  <form id="dio-register" action="/register" method="post" role="form">
+    <div class="form-group">
+      <label for="emailaddress" class="col-md-2">
+      Email address:
+      </label>
+      <div class="col-md-10">
+      <input type="email" class="form-control" id="emailaddress" placeholder="Enter email address">
+      <p class="help-block">
+        Example: yourname@domain.com
+      </p>
+      </div>
+    </div>
+   
+    <div class="form-group">
+      <label for="password" class="col-md-2">
+      Password:
+      </label>
+      <div class="col-md-10">
+      <input type="password" class="form-control" id="password" placeholder="Enter Password">
+      <p class="help-block">
+        Min: 6 characters (Alphanumeric only)
+      </p>
+      </div>
+   
+   
+    </div>
+   
+    <div class="form-group">
+      <label class="col-md-2">
+      Disaster Type:
+      </label>
+      <div class="col-md-10">
+        <ul class="chk-container">
+          <li><input type="checkbox" id="selecctall-disaster"/> Select All</li>
+          <% for(x=0; x<disasters.length; x++) { %>
+            <li><input class="disaster-checkbox" type="checkbox" name="disaster[]" value="<%= disasters[x].id%>"><%= disasters[x].name%></li>
+          <% }%>
+        </ul>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2">My Contacts:</label>
+      <div class="col-md-10" id="my-contacts">
+        <input type='button' value='Add Mobile Number' onClick="addContact('MOBILE_NUMBER', false)" />
+        <input type='button' value='Add Email Address' onClick="addContact('EMAIL', false)" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2">Relative Contacts:</label>
+      <div class="col-md-10" id="relative-contacts">
+        <input type='button' value='Add Mobile Number' onClick="addContact('OTHERS_MOBILE_NUMBER', true)" />
+        <input type='button' value='Add Email Address' onClick="addContact('OTHERS_EMAIL', true)" />
+      </div>
+    </div>
+   
+    <div class="form-group">
+      <label for="country" class="col-md-2">
+      Country:
+      </label>
+      <div class="col-md-10">
+      <select name="country" id="country" class="form-control">
+        <option>--Please Select--</option>
+        <option>India</option>
+        <option>United States</option>
+        <option>Canada</option>
+        <option>United Kingdom</option>
+        <option>Others</option>
+      </select>
+      </div>
+    </div>
+   
+    <div class="row">
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-10">
+      <button type="submit" class="btn btn-info">
+        Subscribe
+      </button>
+      </div>
+    </div>
+  </form>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('#selecctall-disaster').click(function(event) {  //on click 
+      if(this.checked) { // check select status
+          $('.disaster-checkbox').each(function() { //loop through each checkbox
+              this.checked = true;  //select all checkboxes with class "checkbox1"               
+          });
+      }else{
+          $('.disaster-checkbox').each(function() { //loop through each checkbox
+              this.checked = false; //deselect all checkboxes with class "checkbox1"                       
+          });         
+      }
+  });
+
+
+  // $("#addContactButton").click(function () {
+  //     // if( ($('.form-horizontal .control-group').length+1) > 2) {
+  //     //     alert("Only 2 control-group allowed");
+  //     //     return false;
+  //     // }
+  //     var id = ($('#my-contacts .form-control').length + 1).toString();
+
+  //     $('#my-contacts').append('<input type="text" class="form-control" id="my-contact-' + id + '" placeholder="Email"><p class="help-block">Example: yourname@domain.com</p>');
+  // });
+
+  // $("#removeButton").click(function () {
+  //     if ($('.form-horizontal .control-group').length == 1) {
+  //         alert("No more textbox to remove");
+  //         return false;
+  //     }
+
+  //     $(".form-horizontal .control-group:last").remove();
+  // });
+});
+
+
+  function addContact(type, isForRelative) {
+    var parentId = 'my-contacts';
+    var name = '';
+    var html = '';
+    var helpBlock = '';
+    var placeholder = '';
+
+    if (type == 'MOBILE_NUMBER' || type == 'OTHERS_MOBILE_NUMBER') {
+      helpBlock = 'Example: 09191234567';
+      placeholder = 'Mobile Number';
+    } else if (type == 'EMAIL' || type == 'OTHERS_EMAIL') {
+      helpBlock = 'Example: email@domain.com';
+      placeholder = 'Email Address';
+    }
+
+    var id = ($('#'+parentId+' .form-control').length + 1).toString();
+    name = type+'['+id+']';
+
+    html = '<input type="text" name="'+name+'" class="form-control" id="'+parentId+'-' + id + '" placeholder="'+placeholder+'"><p class="help-block">'+helpBlock+'</p>';
+
+    if (isForRelative) {
+      parentId = 'relative-contacts';
+      html = '<input type="text" name="'+name+'" class="form-control" id="'+parentId+'-' + id + '" placeholder="'+placeholder+'"><p class="help-block">'+helpBlock+'</p>';
+    }
+
+    $('#'+parentId).append(html);
+  }
+</script>

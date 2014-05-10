@@ -60,6 +60,11 @@ module.exports = function(db) {
 
     return activationCode;
   }
+
+  User.generateUsername = function(email) {
+    var delimiter = '_';
+    return email.replace('@', delimiter);
+  };
   
   return User;
 }
