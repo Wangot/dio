@@ -9,10 +9,10 @@ var dateformat = require('dateformat');
 
 module.exports = {
   create: function(req, res) {
-    var UserEventHistory = require(path.join(modelsPath, '/userEventHistory'))(req.db);
+    var EventHistory = require(path.join(modelsPath, '/eventHistory'))(req.db);
     var eventDetails = this.formatBeforeCreate(req.body);
 
-    Q.ninvoke(Event, 'create', eventDetails)
+    Q.ninvoke(EventHistory, 'create', eventDetails)
     .then(function(createdEvent){
       return res.send(new ApiReturn(true, createdEvent, message.DATA_SUCCESSFULLY_CREATED, eventDetails));
     })
@@ -26,9 +26,9 @@ module.exports = {
 
     var filter = this.filterList(params);
 
-    var UserEventHistory = require(path.join(modelsPath, '/userEventHistory'))(req.db);
+    var EventHistory = require(path.join(modelsPath, '/eventHistory'))(req.db);
 
-    UserEventHistory.find(filter, function(err, events){
+    EventHistory.find(filter, function(err, events){
       if(err) {
         console.log(err);
         res.send(new ApiReturn(false, err, message.ERROR, params));
@@ -66,21 +66,23 @@ module.exports = {
       filterData.event_id = orm.eq(params.event);
     }
 
-    if(params.dateFrom) {
-      var dateFrom = new Date(params.dateFrom);
-    } else {
-      var dateFrom = new Date();
-    }
-    dateFrom.setHours(0,0,0,0);
+    if (params.dateFrom && params.dateTo) {
+      if(params.dateFrom) {
+        var dateFrom = new Date(params.dateFrom);
+      } else {
+        var dateFrom = new Date();
+      }
+      dateFrom.setHours(0,0,0,0);
 
-    if(params.dateTo) {
-      var dateTo = new Date(params.dateTo);
-    } else {
-      var dateTo = new Date();
-    }
-    dateTo.setHours(23,59,59,59);
+      if(params.dateTo) {
+        var dateTo = new Date(params.dateTo);
+      } else {
+        var dateTo = new Date();
+      }
+      dateTo.setHours(23,59,59,59);
 
-    filterData.created = orm.between(dateformat(dateFrom, "yyyy-mm-dd H:MM:ss"), dateformat(dateTo, "yyyy-mm-dd H:MM:ss"));
+      filterData.created = orm.between(dateformat(dateFrom, "yyyy-mm-dd H:MM:ss"), dateformat(dateTo, "yyyy-mm-dd H:MM:ss"));
+    }
 
     return filterData; 
   },
@@ -91,9 +93,7 @@ module.exports = {
       latitude:rawParams.latitude,
       longitude:rawParams.longitude,
       event_id:rawParams.event_id,
-      status:rawParams.status,
-      event_level_id:rawParams.event_level_id,
-      note:rawParams.note || ''
+      event_level_id:rawParams.event_level_id
     };
   }
 }
