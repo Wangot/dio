@@ -6,7 +6,10 @@
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="icon-reorder icon-2x"></span>
                     </button>
-                    <a id="logo" class="navbar-brand" href="#">BRAND<span style="color: #0B87C2">NAME</span></a>
+                     <a id="logo" class="navbar-brand">
+                        <span id="logo-img"><img src="public/images/logo.png" class="img-responsive"/></span>
+                        <p class="hidden-xs"><span style="color: #dfdfdf">Assistance</span><span style="color: #0B87C2"> In Disaster</span></p>
+                    </a>                     
                 </div>
                 <div id="main-nav" class="navbar-collapse collapse">
                     <ul id="menu-container" class="nav navbar-nav">
@@ -15,13 +18,13 @@
                         <li><a href="">About</a></li>
                         <li><a href="">Contact</a></li>
                     </ul>
-                   <div class="header-tools col-md-9">
+                   <div class="header-tools pull-right">
                          <div id="address" class="col-md-9">
                             <input type="text" id="search-address" name="location" placeholder="What's your address?"/>
                             <input type="button" id="search-btn" name="search" placeholder="SEARCH" class="btn" value="SEARCH">
                         </div>
                         <div id="message-btn" class="col-md-3">
-                            <a class="btn"><i class="icon-envelope"></i> DISASTER ALERT</a>
+                            <a class="btn" href="/register"><i class="icon-envelope"></i> DISASTER ALERT</a>
                         </div>
                    </div>
                </div><!--/.nav-collapse -->
@@ -46,7 +49,7 @@
                 </a>
             </li>
             <li>
-                <a href="#address" data-toggle="tab" class="">
+                <a href="#address-pane" data-toggle="tab" class="">
                     <span class="left">&nbsp;</span>
                     <span class="center">Address</span>
                     <span class="right">&nbsp;</span>
@@ -69,20 +72,59 @@
                                 <a id="uncheck-all">Clear All</a>
                             </label>
                             <span>(hover each Disaster Type Symbol for each description)</span>
-                        </div>    
+                        </div>  
+                        <div class="disaster-type">
+                            <ul>
+                                <li><input type="checkbox"><img src="public/images/disasters/earthquake.png" data-toggle="tooltip" title="Earthquake"></li>
+                                <li><input type="checkbox"><img src="public/images/disasters/flood.png" data-toggle="tooltip" title="Flood"></li>
+                                <li><input type="checkbox"><img src="public/images/disasters/rainfall.png" data-toggle="tooltip" title="Rainfall"></li>
+                            </ul>
+                        </div>  
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="date">
-                 <div class="container content">...</div>
+                 <div class="container content">
+                     <div class="col-md-3">
+                        <p>First, select a starting date "From" and an end date "To". Then, click Apply or collapse the tab.</p>
+                    </div>
+                    <div class="list col-md-9">
+                        <div class="heading">
+                            <label for="show">
+                                <a id="reset">Reset All</a>
+                            </label>
+                        </div>  
+                        <div class="date-picker">
+                            <label>FROM:</label><input id="dateFrom" type="text" value="" /> - 
+                             <label>TO:</label><input id="dateTo" type="text" value="" />
+                            <input type="button" class="btn" value="Update" onclick="loadUserEvents()" />
+                        </div>  
+                     </div>
+                 </div>
             </div>
-            <div class="tab-pane fade" id="address">
-                 <div class="container content">...</div>
+            <div class="tab-pane fade" id="address-pane">
+                 <div class="container content">
+                    <div class="col-md-3">
+                        <p>Focus your search around an address.</p>
+                    </div>
+                    <div class="list col-md-9">
+                        <div class="heading">
+                            <label for="show">
+                                <a id="search">Search Address</a>
+                            </label>
+                        </div>  
+                        <div class="search">
+                            <input id="search" type="text" value="" placeholder="What's your address?" />
+                            <input type="button" class="btn" value="Search" />
+                        </div>  
+                     </div>
+                 </div>
             </div>
+            
             <div class="container content">
                 <div class="toolbar">
                     <span class="status-message">
-                        <p>class="">Disasters: 
+                     <!--   <p class="">Disasters: 
                             <select id="disaster">
                                 <option value="all">All</option>
                                 <option value="1">Disaster 1</option>
@@ -91,10 +133,11 @@
                                 <option value="4">Disaster 4</option>
                             </select>
 
-                        </p>
+                        </p> -->
+                        <a class="btn">No. Of Disaster</a>
                         <p> between <input id="dateFrom" type="text" value="" /> - 
                             <input id="dateTo" type="text" value="" />
-                            <input type="button" value="Update" onclick="loadUserEvents()" />
+                            <input type="button" class="btn" value="Update" onclick="loadUserEvents()" />
                         </p>
                             <select id="mapLayer" onchange="changeLayerDisplay()">
                                 <option value="marker">Reports</option>

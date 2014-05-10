@@ -2,13 +2,13 @@
 
 html, body {
     -webkit-font-smoothing: antialiased !important;
-    font-family: 'Open Sans';
+    font-family: 'Lucida Sans, Arial;';
     font-size: 14px;
     background: #191919 url(../images/body-home.jpg) no-repeat;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Open Sans';
+    font-family: 'Lucida Sans, Arial;';
 }
 
 .no-padding {
@@ -29,12 +29,14 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
 	background: #000 url(../images/bg-header.gif) repeat-x;
 	z-index: 3;
+	min-height: 60px;
 }
 
 #header {
     max-width: 940px;
     margin: 0 auto;
     padding-bottom: 15px;
+    padding-top: 30px;
 }
 
 #header .navbar-header {
@@ -43,6 +45,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #header ul {
     margin-left: 20px;
+    margin-top: -20px;
 }
 
 #header ul li a {
@@ -63,13 +66,27 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: none;
     color: #6D6F71;
     font-size: 22px;
-    max-width: 80px;
-    padding-left: 5px;
+    padding: 0;
+    padding-left: 15px;
+}
+
+#header #logo p {
+    float: left;
+    font-size: 20px;
+    margin-top: 4px;
+    margin-left: -17px;
+}
+
+#header #logo-img {
+    max-width: 130px;
+    display: inline-block;
+    float: left;
+    margin-top: -30px;
 }
 
 input#search-address {
     margin: 10px 5px 0 0;
-    width: 325px;
+    width: 296px;
     font: 14px "Lucida Sans", Arial, Helvetica, sans-serif;
     color: #6D6E71;
     border: 1px solid #000;
@@ -95,7 +112,7 @@ input#search-address {
 }
 
 .header-tools {
-    margin-top: -5px;
+    margin-top: -50px;
 }
 
 .header-tools #message-btn {
@@ -108,7 +125,7 @@ input#search-address {
 	margin: 0;
 	padding: 0;
 	position: absolute;
-	top: 75px;
+	top: 100px;
 	left: 0;
 	z-index: 1;
 	width: 100%;
@@ -162,6 +179,7 @@ input#search-address {
 
 .tools-wrapper .tab-content .tab-pane {
     border-bottom: 1px solid #A0A0A0;
+    padding-bottom: 8px;
 }
 
 .tools-wrapper .tab-content .tab-pane .content {
@@ -178,6 +196,17 @@ input#search-address {
     padding: 9px;
 }
 
+.tools-wrapper .tab-content .tab-pane .content .list .disaster-type ul {
+	list-style: none;
+	margin-left: -40px;
+    margin-top: -10px;
+}
+
+.tools-wrapper .tab-content .tab-pane .content .list .disaster-type ul li {
+    float: left;
+    margin-right: 8px;
+}
+
 .tools-wrapper .tab-content .tab-pane .content .list label,
 .tools-wrapper .tab-content .tab-pane .content .list span {
     font-size: 12px;
@@ -191,12 +220,16 @@ input#search-address {
 
 .toolbar .status-message {
     float: left;
-    width: 50%;
+    width: 70%;
 }
 
 .toolbar .status-message a {
     float: left;
     margin-right: 10px;
+    background: #0B87C2;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 20px;
 }
 
 .toolbar .side-menu ul {
@@ -241,7 +274,36 @@ input#search-address {
 	color: #333;
 }
 
+.date-picker input, .search input, .status-message input {
+    border: 0;
+	margin-left: 10px;
+	border-radius: 3px;
+	width: 150px;
+}
 
+ .status-message input {
+    width: 130px !important;
+ }
+
+.search input{
+    width: 300px !important;
+}
+
+.status-message input.btn {
+    width: 70px !important;
+	background: #0B87C2;
+	color: #fff;
+	padding: 3px 10px;
+	font-size: 12px;
+}
+
+.date-picker input.btn, .search input.btn,.status-message input.btn {
+    width: 80px;
+	background: #0B87C2;
+	color: white;
+	padding: 3px 10px;
+	font-size: 13px;
+}
 
 
 /* FOOTER */
