@@ -29,10 +29,10 @@ h1, h2, h3, h4, h5, h6 {
 	max-width: 940px;
 	margin: 0 auto;
 	border-radius: 0;
-	margin-top: 10px;
+	margin-top: 30px;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
-	height: 60px;
+	min-height: 60px;
 }
 
 #header .navbar-header {
@@ -45,6 +45,22 @@ h1, h2, h3, h4, h5, h6 {
 	text-decoration: none;
 	color: #6D6F71;
 	font-size: 22px;
+	padding: 0;
+	padding-left: 15px;
+}
+
+#header #logo p {
+    float: left;
+	font-size: 20px;
+	margin-top: 14px;
+	margin-left: -17px;
+}
+
+#header #logo-img {
+    max-width: 130px;
+	display: inline-block;
+	float: left;
+	margin-top: -30px;
 }
 
 #main-nav ul {
@@ -52,7 +68,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #main-nav ul li a {
-    font-size: 18px;
+    font-size: 16px;
 	font-family: Lucida Sans, Arial;
 	font-weight: bold;
 	text-decoration: none;
@@ -68,6 +84,7 @@ h1, h2, h3, h4, h5, h6 {
     background: #0D0D0D;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
+	padding-top: 15px;
 }
 
 #bottom .col {
@@ -118,10 +135,136 @@ h1, h2, h3, h4, h5, h6 {
 
 #footer h4 {
     color: #6D6E71;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 #footer p, #footer a {
     color: #fff;
     font-size: 12px;
+}
+
+/* MEDIA QUERIES */
+@media screen and (max-width: 319px) {
+    #header {
+        margin-top: 15px !important;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+    }   
+    
+    .navbar-toggle {
+            padding: 2px 10px !important;
+    }
+    
+    #header .navbar-header {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+    
+    #main-nav ul li a {
+        font-size: 14px !important;
+        
+    }
+    
+    #menu-container {
+        text-align: center !important;
+        float: none !important;
+    }
+    
+    #header #logo-img {
+        max-width: 85px !important;
+        margin-top: -10px !important;
+    }
+    
+    #bottom #address input#search-address {
+        width: 150px !important;
+    }
+    
+    #bottom #address {
+        padding-left: 5px !important;
+		padding-right: 5px !important;
+		padding-top: 10px !important;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width: 479px) {
+     #header {
+        margin-top: 15px !important;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+    }   
+    
+    .navbar-toggle {
+            padding: 2px 10px !important;
+    }    
+    
+    #header #logo-img {
+        max-width: 90px !important;
+        margin-top: -15px !important;
+    }
+    
+    #bottom #address input#search-address {
+        width: 210px !important;
+    }
+    
+    #header .navbar-header {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+    
+    #main-nav ul li a {
+        font-size: 14px !important;
+        
+    }
+    
+    #menu-container {
+        text-align: center !important;
+        float: none !important;
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 767px) {
+    #address {
+        margin-top: 10px !important;
+    }
+    
+    #bottom #address input#search-address {
+        width: 365px !important;
+    }
+    
+    #header .navbar-header {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+    
+     #menu-container {
+        text-align: center !important;
+        float: none !important;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    #header #logo {
+        padding-left: 0px !important;
+    }
+    
+    #header #logo-img {
+        max-width: 100px !important;
+        margin-top: -15px !important;
+    }
+    
+    #header #logo p {
+        font-size: 14px !important;
+    }
+    
+    #bottom {
+        padding-top: 15px !important;
+    }
+    
+    #bottom #address input#search-address {
+        width: 205px !important;
+    }
+    
+    #bottom .col select {
+        width: 185px !important;
+    }
 }
