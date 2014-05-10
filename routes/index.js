@@ -24,6 +24,8 @@ exports.attachHandlers = function attachHandlers (server) {
     require("./auth")(server);
 
     server.get('/api/four_hour_forecast', getFourhourForeCast);
+    server.get('/api/four_day_forecast', getFourDayForeCast);
+
     server.post('/send/sms', sendSMS);
 };
 
@@ -50,6 +52,15 @@ var getFourhourForeCast = function(req, res) {
   var servicePath = path.resolve('./', 'models', 'service');
   var serviceNoahAPI = require(servicePath + '/noah_API.js');
   serviceNoahAPI.getFourHourForeCast(function(err, data) {
+    res.json(200, data);
+  });
+}
+
+var getFourDayForeCast = function(req, res) {
+  var path = require('path');
+  var servicePath = path.resolve('./', 'models', 'service');
+  var serviceNoahAPI = require(servicePath + '/noah_API.js');
+  serviceNoahAPI.getFourDayForeCast(function(err, data) {
     res.json(200, data);
   });
 }
