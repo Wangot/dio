@@ -4,8 +4,8 @@
   html { height: 100% }
   body { height: 100%; margin: 0; padding: 0 }
   #map-canvas { 
-  	height: 600px;
-  	width: 1000px;
+  	height: 740px;
+  	width: 100%;
   }
 </style>
 <script type="text/javascript"
@@ -15,7 +15,7 @@
   function initialize() {
     var mapOptions = {
       center: new google.maps.LatLng(14.559, 121.017),
-      zoom: 5
+      zoom: 7
     };
     var map = new google.maps.Map(document.getElementById("map-canvas"),
         mapOptions);

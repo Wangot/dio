@@ -12,6 +12,7 @@
    		<% stylesheet('/vendors/bootstrap/3.1.1/css/bootstrap-theme.min.css') -%>
 
    		<% stylesheet('/public/css/style.css') -%>
+        <% stylesheet('/public/css/font-awesome.css') -%>
 
    		<% script('/vendors/jquery/1.11.0/jquery.min.js') -%>
    		<% script('/vendors/bootstrap/3.1.1/js/bootstrap.min.js') -%>
@@ -30,12 +31,10 @@
 	    <![endif]-->
 	</head>
 	<body>
-		<div class="container">
-			<%- partial('partials/header.ejs') %>
-			
-			<%-body -%>
+		<%- partial('partials/header.ejs') %>
+		
+		<%-body -%>
 
-			<%- partial('partials/footer.ejs') %>
-		</div>
+		<%- partial('partials/footer.ejs') %>
 	</body>
 </html>

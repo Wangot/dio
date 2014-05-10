@@ -1,28 +1,131 @@
-<% layout('../layout') -%>
-   <div id="body-content" class="container content">
-        <div class="slides">
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Readysaster- Hack for Resilience</title>
+
+        <% stylesheet('/vendors/bootstrap/3.1.1/css/bootstrap.min.css') -%>
+        <% stylesheet('/vendors/bootstrap/3.1.1/css/bootstrap-theme.min.css') -%>
+
+        <% stylesheet('/public/css/style-home.css') -%>
+
+        <% script('/vendors/jquery/1.11.0/jquery.min.js') -%>
+        <% script('/vendors/bootstrap/3.1.1/js/bootstrap.min.js') -%>
+        <% script('/vendors/angular/1.2.14/angular.min.js') -%>
+
+        <% script('/public/js/custom.js') -%>
+
+        <%-stylesheets%>
+        <%-scripts%>
+
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="header">
+                <div id="header" class="navbar">
+                    <div class="navbar-inner">
+                        <div class="container content">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <span class="icon-reorder icon-2x"></span>
+                                </button>
+                                <a id="logo" class="navbar-brand" href="#">BRAND<span style="color: #0B87C2">NAME</span></a>
+                            </div>
+                            <div id="main-nav" class="navbar-collapse collapse">
+                                <ul id="menu-container" class="nav navbar-nav pull-right">
+                                    <li><a href="">Map</a></li>
+                                    <li><a href="">Get Involved</a></li>
+                                    <li><a href="">Help</a></li>
+                                    <li><a href="">About</a></li>
+                                    <li><a href="">Contact</a></li>
+                                </ul>
+                           </div><!--/.nav-collapse -->
+                         </div>
+                      </div>
+                </div>
+                <div id="bottom" class="container content">
+                    <div id="address" class="col col-md-5">
+                        <input type="text" id="search-address" name="location" placeholder="What's your address?"/>
+                        <input type="button" id="search-btn" name="search" placeholder="SEARCH" class="btn" value="SEARCH">
+                    </div>
+                    <div id="disaster-type" class="col col-md-4">
+                        <select>
+                          <option value="disaster1">Disaster 1</option>
+                          <option value="disaster2">Disaster 2</option>
+                          <option value="disaster3">Disaster 3</option>
+                          <option value="disaster4">Disaster 4</option>
+                        </select>
+                    </div>
+                     <div id="disaster-type" class="col col-md-3">
+                        <select>
+                          <option value="disaster1">Disaster 1</option>
+                          <option value="disaster2">Disaster 2</option>
+                          <option value="disaster3">Disaster 3</option>
+                          <option value="disaster4">Disaster 4</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             
-              <!-- Wrapper for slides -->
-              <div class="carousel-inner">
-                <div class="item active">
-                  <img src="public/images/image1.png" class="img-responsive">
+               <div id="body-content" class="container content">
+                    <div class="slides">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        
+                          <!-- Wrapper for slides -->
+                          <div class="carousel-inner">
+                            <div class="item active">
+                              <img src="public/images/image1.png" class="img-responsive">
+                            </div>
+                             <div class="item">
+                              <img src="public/images/image1.png" class="img-responsive">
+                            </div>
+                             <div class="item">
+                              <img src="public/images/image1.png" class="img-responsive">
+                            </div>
+                          </div>
+                        
+                          <!-- Controls -->
+                          <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                            <span class="icon-chevron-left"></span>
+                          </a>
+                          <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                            <span class="icon-chevron-right"></span>
+                          </a>
+                        </div>        
+                    </div>         
                 </div>
-                 <div class="item">
-                  <img src="public/images/image1.png" class="img-responsive">
-                </div>
-                 <div class="item">
-                  <img src="public/images/image1.png" class="img-responsive">
-                </div>
-              </div>
-            
-              <!-- Controls -->
-              <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                <span class="icon-chevron-left"></span>
-              </a>
-              <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                <span class="icon-chevron-right"></span>
-              </a>
-            </div>        
-        </div>         
-    </div>
+
+            <div id="footer" class="container content">
+               <div class="col-md-3">
+                   <h4>RELATED LINKS</h4>
+                   <ul>
+                       <li><a>Disaster Alert</a></li>
+                       <li><a>Help</a></li>
+                       <li><a>Legend</a></li>
+                       <li><a><i class="icon-facebook-sign"></i> Facebook</a></li>
+                   </ul>
+               </div>         
+               <div class="col-md-5">
+                   <h4 id="appname">ABOUT THE APP</h4>
+                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit nibh suscipit venenatis facilisis. Nam eget felis 
+                   eget nisi pellentesque porta sed non tortor. Phasellus faucibus erat nec sem sodales, et bibendum tellus iaculis. Integer sit 
+                   amet diam et sem vestibulum lobortis in sed nulla. Donec lobortis vehicula tortor, at fringilla erat fringilla nec. </p>
+               </div>         
+               <div class="col-md-4">
+                   <h4>TEAM DIO</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit nibh suscipit venenatis facilisis. Nam eget felis 
+                   eget nisi pellentesque porta sed non tortor. Phasellus faucibus erat nec sem sodales, et bibendum tellus iaculis.</p>
+               </div>         
+            </div>
+        </div>
+    </body>
+</html>
