@@ -10,15 +10,16 @@ module.exports = function(db) {
     latitude    : { type: 'text', size: 255, required: true },
     longtitude  : { type: 'text', size: 255, required: true }
   }, {
+    autoFetch : true,
     methods: {
       // methods here
     },
-    autoFetch : true,
     hooks : {
       beforeCreate : function() {
         var that = this;
         that.created = new Date();
-    }
+      }
+   }
   });
 
   var Event = require('./event')(db);

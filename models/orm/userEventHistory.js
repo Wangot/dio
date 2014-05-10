@@ -21,6 +21,7 @@ module.exports = function(db) {
       beforeCreate : function() {
         var that = this;
         that.created = new Date();
+      }
     }
   });
 
