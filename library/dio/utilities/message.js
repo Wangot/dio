@@ -17,3 +17,5 @@ define("DATA_FAILED_TO_UPDATE", "Unable to update data. Contact your system imme
 
 define("LOGIN_USERNAME_REQUIRED", "Unable to Login. Username is required.");
 define("LOGIN_PASSWORD_REQUIRED", "Unable to Login. Password is required.");
+
+define("ERROR", "Error was encountered.");
