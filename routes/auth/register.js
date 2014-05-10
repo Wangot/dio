@@ -15,7 +15,6 @@ module.exports = function(server) {
     function(req, res){
       var db = req.db;
       var Event = require(path.join(modelsPath, '/event'))(db);
-      var UserAlertSetting = require(path.join(modelsPath, '/userAlertSetting'))(db);
 
       Q.ninvoke(Event,'find')
       .then(function(disasters){
@@ -37,6 +36,7 @@ module.exports = function(server) {
     var db = req.db;
     var User = require(path.join(modelsPath, '/user'))(db);
     var Contact = require(path.join(modelsPath, '/contact'))(db);
+    var UserAlertSetting = require(path.join(modelsPath, '/userAlertSetting'))(db);
 
     // process starts here
     Q.ninvoke(User, 'count', { email: postData.email })
@@ -102,7 +102,7 @@ module.exports = function(server) {
 
       Q.ninvoke(User, 'create', userData)
       .then(createContacts)
-      // .then(createContacts)
+      .then(createUserAlertSetting)
       .then(function(data) {
         req.flash('success', successMessage);
         var redirectUrl = '/dashboard';
@@ -184,15 +184,56 @@ module.exports = function(server) {
         };
       };
 
-      Q.ninvoke(Contact,'create', contactData)
+      return Q.ninvoke(Contact,'create', contactData)
       .then(function(contacts){
-        return true;
+        return contacts;
       })
       .fail(function(err) {
         console.log(err);
         throw new Error("Unable to create contacts.")
       });
     }
+
+    function createUserAlertSetting(contacts) {
+      var alertSettingData = []
+
+      if (contacts && contacts.length > 0 && 
+          postData.disaster && postData.disaster.length > 0) {
+        var disasters = postData.disaster;
+
+        for (var i = 0; i < disasters.length; i++) {
+
+          contacts.forEach(function(contact){
+            var type;
+            if (contact.type == 'MOBILE_NUMBER' || contact.type == 'EMAIL') {
+              type = 'SYSTEM';
+            } else {
+              type = 'HELP';
+            }
+
+            alertSettingData.push({
+              event_id: disasters[i],
+              user_id:contact.user_id,
+              contact_id:contact.id,
+              type: type
+            });
+          })
+
+        };
+
+        Q.ninvoke(UserAlertSetting,'create', alertSettingData)
+        .then(function(settings){
+          return settings;
+        })
+        .fail(function(err) {
+          console.log(err);
+          throw new Error("Unable to create settings.")
+        });
+      };      
+
+    }
+
+
 
     function sendResponse() {
       var Event = require(path.join(modelsPath, '/event'))(db);
