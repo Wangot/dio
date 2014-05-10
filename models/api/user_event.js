@@ -12,7 +12,7 @@ module.exports = {
     var UserEventHistory = require(path.join(modelsPath, '/userEventHistory'))(req.db);
     var eventDetails = this.formatBeforeCreate(req.body);
 
-    Q.ninvoke(Event, 'create', eventDetails)
+    Q.ninvoke(UserEventHistory, 'create', eventDetails)
     .then(function(createdEvent){
       return res.send(new ApiReturn(true, createdEvent, message.DATA_SUCCESSFULLY_CREATED, eventDetails));
     })

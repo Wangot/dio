@@ -28,7 +28,7 @@ module.exports = function(db) {
 
   UserEventHistory.hasOne('event_level', EventLevel, { reverse: 'user_event_histories', required: true});
 
-  UserAlertSetting.hasOne('user', User, { reverse: 'user_event_histories', required: true });
+  UserEventHistory.hasOne('user', User, { reverse: 'user_event_histories', required: true });
 
   // create table
   UserEventHistory.sync(function(err) {

@@ -14,7 +14,7 @@ exports.attachHandlers = function attachHandlers (server) {
 
     //TODO: Temporary dashboard
     server.get('/dashboard', 
-      isAuth,
+      // isAuth,
       function(req, res){
         res.render('public/site/login', { title: 'Express' });
       }

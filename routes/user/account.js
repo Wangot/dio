@@ -21,25 +21,27 @@ module.exports = function(server) {
       var disasters, contacts;
 
       Q.ninvoke(Event,'find')
-      .then(function(disasters){
-        disasters = disasters;
-        return Q.ninvoke(Contact, find, {user_id: req.user.id});
+      .then(function(data){
+        disasters = data;
+        return Q.ninvoke(Contact, 'find', {user_id: req.user.id});
       })
-      .then(function(contacts){
-        contacts = contacts;
-        return Q.ninvoke(UserAlertSetting, find, {user_id: req.user.id});
+      .then(function(data){
+        contacts = data;
+        return Q.ninvoke(UserAlertSetting, 'find', {user_id: req.user.id});
       })
       .then(function(settings){
         // compose disaster
-        var formattedDisasters = {};
-        settings.forEach(function(setting){
+        // var formattedDisasters = {};
+        // settings.forEach(function(setting){
 
-        })
-      })
-      .then(function(){
-        res.render('public/user/setting', { title: 'User Setting', disasters: disasters, contacts:contacts, });
+        // })
         return true;
       })
+      .then(function(isSuccess){
+        res.render('public/user/setting', { title: 'User Setting', disasters: disasters, contacts:contacts});
+        return true;
+      })
+
     }
   );
 

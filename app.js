@@ -54,23 +54,6 @@ app.configure(function () {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  var LocalStrategy = require('passport-local').Strategy;
-
-  passport.use(new LocalStrategy(
-    function(username, password, done) {
-      User.findOne({ username: username }, function(err, user) {
-        if (err) { return done(err); }
-        if (!user) {
-          return done(null, false, { message: 'Incorrect username.' });
-        }
-        if (!user.validPassword(password)) {
-          return done(null, false, { message: 'Incorrect password.' });
-        }
-        return done(null, user);
-      });
-    }
-  ));
-
   passport.serializeUser(function(user, done) {
     done(null, user.id);
   });
@@ -89,12 +72,12 @@ app.configure(function () {
 
   var LocalStrategy = require('passport-local').Strategy;
   passport.use(new LocalStrategy({
-      usernameField: 'username',
+      usernameField: 'email',
       passwordField: 'password'
     },
     function(username, password, done) {
       var User = require(path.resolve('./models/orm/user'))(ormDB);
-      User.find({ username: username }, function(err, user) {
+      User.find({ email: username }, function(err, user) {
         if (err) { 
           return done(err); 
         }
@@ -126,7 +109,7 @@ app.configure(function () {
   ));
 
   var FacebookStrategy = require('passport-facebook').Strategy;
-  passport.use(new FacebookStrategy({
+    passport.use(new FacebookStrategy({
       clientID: config.facebookApp.appID,
       clientSecret: config.facebookApp.appSecret,
       callbackURL: config.facebookApp.callbackURL,
