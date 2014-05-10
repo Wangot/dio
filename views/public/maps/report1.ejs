@@ -50,6 +50,7 @@ var heatPoints = [];
    $.ajax({
       url: "/api/user_events",
       dataType: "json",
+      data: {dateFrom: $("#dateFrom").val(), dateTo: $("#dateTo").val(), "event": $("#disaster").val()},
       success: function(jsonData){
         if(jsonData.code == 1){
           var userEvents = jsonData.data;
@@ -64,7 +65,6 @@ var heatPoints = [];
       }
    });
  }
-
 
 
   function addMapPoint(userEvent) {

@@ -82,8 +82,25 @@
             <div class="container content">
                 <div class="toolbar">
                     <span class="status-message">
-                        <a class=""> 42 Disasters </a>
-                        <p> between 5/10/2014 - 5/11/2014</p>
+                        <p>class="">Disasters: 
+                            <select id="disaster">
+                                <option value="1">Disaster 1</option>
+                                <option value="2">Disaster 2</option>
+                                <option value="3">Disaster 3</option>
+                                <option value="4">Disaster 4</option>
+                            </select>
+
+                        </p>
+                        <p> between <input id="dateFrom" type="text" value="" /> - 
+                            <input id="dateTo" type="text" value="" />
+                            <input type="button" value="Update" onclick="loadUserEvents()" />
+                        </p>
+                        <script type="text/javascript">
+                            $(function() {
+                                $( "#dateFrom" ).datepicker();
+                                $( "#dateTo" ).datepicker();
+                            });
+                        </script>
                     </span>
                     
                     <div class="side-menu pull-right">
