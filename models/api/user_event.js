@@ -22,14 +22,13 @@ module.exports = {
     });
   },
   list: function(req, res){
-    var Event = require(path.join(modelsPath, '/event'))(req.db);
     var params = req.query;
 
     var filter = this.filterList(params);
 
-    var EventHistory = require(path.join(modelsPath, '/eventHistory'))(req.db);
+    var UserEventHistory = require(path.join(modelsPath, '/userEventHistory'))(req.db);
 
-    EventHistory.find(filter, function(err, events){
+    UserEventHistory.find(filter, function(err, events){
       if(err) {
         console.log(err);
         res.send(new ApiReturn(false, err, message.ERROR, params));
