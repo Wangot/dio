@@ -19,6 +19,7 @@
     "q": "~1.0.0",
     "twilio" : "1.6.0",
     "dateformat": "latest",
-    "validator": "latest"
+    "validator": "latest",
+    "nodemailer": "latest"
   }
 }

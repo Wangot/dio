@@ -36,7 +36,8 @@ var index = function(req, res){
   var path = require('path'),
       modelsPath = path.resolve('./models/orm');
   var User = require(path.join(modelsPath, '/user'))(req.db);
-
+var mailer = require(path.resolve("./models/service/email.js"));
+mailer.send("erickson.leynes@98labs.com, eman@98labs.com", "test mail from dio node", "abno ka nyahahahha", "");
 	res.render('public/site/index', { title: 'Express' });
 };
 
