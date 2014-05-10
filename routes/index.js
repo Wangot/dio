@@ -27,6 +27,8 @@ exports.attachHandlers = function attachHandlers (server) {
     server.get('/api/four_day_forecast', getFourDayForeCast);
 
     server.post('/send/sms', sendSMS);
+
+    require("./user")(server);    
 };
 
 var index = function(req, res){
