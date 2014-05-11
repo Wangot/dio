@@ -87,14 +87,14 @@ var infoWindow = null;
             markerDragon.setAnimation(null);
         } else {
             markerDragon.setAnimation(google.maps.Animation.DROP);
-          }
+        }
 
           var lat = markerDragon.getPosition().lat();
           var lng = markerDragon.getPosition().lng();
 
           $("#reportLat").val(lat);
           $("#reportLng").val(lng);
-        }
+    }
 
  }
  
@@ -273,10 +273,10 @@ function hideHeatMap(){
                   </label>
                   <div class="col-md-9">
                     <select>
-                      <option value="disaster1">Disaster 1</option>
-                      <option value="disaster2">Disaster 2</option>
-                      <option value="disaster3">Disaster 3</option>
-                      <option value="disaster4">Disaster 4</option>
+                      <option value="1">Seismologic</option>
+                      <option value="2">Volcanic</option>
+                      <option value="3">Weather</option>
+                      <option value="4">Climate</option>
                     </select>
                   </div>
             </div>
@@ -289,6 +289,8 @@ function hideHeatMap(){
                     <textarea id="message_area" rows="4" cols="60" name=""></textarea>
                   </div>    
             </div>
+            <input type="hidden" name="reportLat" class="form-control" id="reportLat" />
+            <input type="hidden" name="reportLng" class="form-control" id="reportLng" />
         </form> 
       </div>
       <div class="modal-footer">
