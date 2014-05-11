@@ -140,13 +140,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* REGISTER */
-.register .content, .login .content {
+.register .content, .login .content, #get-involved .content {
     background: #dfdfdf;
     border-top: 1px solid #666;
 	padding: 30px;
 }
 
-.register .content h3, .login .content h3 {
+.register .content h3, .login .content h3, #get-involved .content h3  {
     font-weight: 700;
     font-size: 22px;
 }
