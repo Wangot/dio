@@ -79,7 +79,7 @@
                                 <li><input type="checkbox"><img src="public/images/disasters/flood.png" data-toggle="tooltip" title="Flood"></li>
                                 <li><input type="checkbox"><img src="public/images/disasters/rainfall.png" data-toggle="tooltip" title="Rainfall"></li>
                             </ul>
-                        </div>  
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -124,7 +124,7 @@
             <div class="container content">
                 <div class="toolbar">
                     <span class="status-message">
-                     <!--   <p class="">Disasters: 
+                        <p style="display: inline;float: left;margin-right: 20px;">Disaster Types: 
                             <select id="disaster">
                                 <option value="all">All</option>
                                 <option value="1">Disaster 1</option>
@@ -132,19 +132,16 @@
                                 <option value="3">Disaster 3</option>
                                 <option value="4">Disaster 4</option>
                             </select>
-
-                        </p> -->
-                        <a class="btn">No. Of Disaster</a>
-                        <p> between <input id="dateFrom" type="text" value="" /> - 
-                            <input id="dateTo" type="text" value="" />
-                            <input type="button" class="btn" value="Update" onclick="loadUserEvents()" />
                         </p>
+                        <p>
                             <select id="mapLayer" onchange="changeLayerDisplay()">
                                 <option value="marker">Reports</option>
                                 <option value="heatmap">Heat Map</option>
                             </select>
-                        <p>
-
+                        </p>
+                        <p> between <input id="dateFrom" type="text" value="" /> - 
+                            <input id="dateTo" type="text" value="" />
+                            <input type="button" class="btn" value="Update" onclick="loadUserEvents()" />
                         </p>
                         <script type="text/javascript">
                             $(function() {

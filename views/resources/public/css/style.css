@@ -305,6 +305,50 @@ input#search-address {
 	font-size: 13px;
 }
 
+#infoWindow {
+    text-align: left;
+	width: 300px;
+	min-height: 150px;
+	overflow: hidden;
+	padding: 15px;
+}
+
+#infoWindow h2 {
+    font-family: arial;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+#infoWindow .btn {
+    background: #0B87C2;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 600;
+	border: 1 px solid transparent;
+	margin-right: 10px;
+}
+
+#infoWindow .btn:hover {
+    color: #0B87C2;
+    background: #fff;
+    border: 1px solid #0B87C2;
+    -webkit-transition: color 0.15s linear,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out;
+    -moz-transition: color 0.15s linear,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out;
+    -o-transition: color 0.15s linear,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out;
+    transition: color 0.15s linear,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out;    
+}
+
+.modal-body {
+    display: inline-block;
+    width: 100%;
+}
+
+.form-group {
+    display: inline-block;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
 
 /* FOOTER */
 #footer {
@@ -322,4 +366,9 @@ input#search-address {
 #footer p, #footer a {
     color: #fff;
     font-size: 12px;
+}
+
+/* MEDIA QUERIES */
+@media screen and (max-width: 319px) {
+    
 }
