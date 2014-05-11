@@ -68,7 +68,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #main-nav ul li a {
-    font-size: 16px;
+    font-size: 15px;
 	font-family: Lucida Sans, Arial;
 	font-weight: bold;
 	text-decoration: none;
@@ -140,13 +140,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* REGISTER */
-.register .content, .login .content, #get-involved .content {
+.register .content, .login .content, #get-involved .content, .post-disaster .content  {
     background: #dfdfdf;
     border-top: 1px solid #666;
 	padding: 30px;
 }
 
-.register .content h3, .login .content h3, #get-involved .content h3  {
+.register .content h3, .login .content h3, #get-involved .content h3, .post-disaster .content h3 {
     font-weight: 700;
     font-size: 22px;
 }
@@ -231,6 +231,17 @@ form #register-btn:hover, #login-btn:hover {
 
 #login-form input {
     margin-bottom: 15px;
+}
+
+.modal-body {
+    display: inline-block;
+    width: 100%;
+}
+
+.form-group {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 /* FOOTER */
