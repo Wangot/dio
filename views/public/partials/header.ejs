@@ -21,7 +21,7 @@
                     </ul>
                    <div class="header-tools pull-right">
                          <div id="address" class="col-md-9">
-                            <input type="text" id="search-address" name="location" placeholder="What's your address?"/>
+                            <input type="text" id="search-address" name="location" placeholder="What's your address?" style="width: 280px"/>
                             <input type="button" id="search-btn" name="search" placeholder="SEARCH" class="btn" value="SEARCH">
                         </div>
                         <div id="message-btn" class="col-md-3">
@@ -59,7 +59,7 @@
         </ul>   
         
         <div class="tab-content">
-            <div class="tab-pane fade in active" id="disaster-type">
+         <!--   <div class="tab-pane fade in active" id="disaster-type">
                 <div class="container content">
                     <div class="col-md-3">
                         <p>Here are some <b style="color: #464646">Disaster Types</b> and it's description.</p>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </div>
-         <!--   <div class="tab-pane fade" id="date">
+            <div class="tab-pane fade" id="date">
                  <div class="container content">
                      <div class="col-md-3">
                         <p>First, select a starting date "From" and an end date "To". Then, click Apply or collapse the tab.</p>
@@ -119,13 +119,13 @@
                         <p style="display: inline;float: left;margin-right: 20px;">Disaster Types: 
                             <select id="disaster">
                                 <option value="all">All</option>
-                                <option value="1">Disaster 1</option>
-                                <option value="2">Disaster 2</option>
-                                <option value="3">Disaster 3</option>
-                                <option value="4">Disaster 4</option>
+                                <option value="1">Earthquake</option>
+                                <option value="2">Volcanic</option>
+                                <option value="3">Typhoon</option>
+                                <option value="4">Flood</option>
                             </select>
                         </p>
-                        <p>
+                        <p>Marker Type:  
                             <select id="mapLayer" onchange="changeLayerDisplay()">
                                 <option value="marker">Reports</option>
                                 <option value="heatmap">Heat Map</option>
