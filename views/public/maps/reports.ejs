@@ -58,14 +58,14 @@ var infoWindow = null;
     //addMapPoint(map);
 
     // Place a draggable marker on the map
-    var marker = new google.maps.Marker({
+    var markerDragon = new google.maps.Marker({
         position: latLng,
         map: map,
         animation: google.maps.Animation.DROP,
         draggable:true,
     });
     
-     google.maps.event.addListener(marker, 'dragend', toggleBounce);
+     google.maps.event.addListener(markerDragon, 'dragend', toggleBounce);
      
      function toggleBounce() {
         if (infoWindow) {
@@ -80,14 +80,20 @@ var infoWindow = null;
             '<a href="#" id= "cancel_button" class="btn" onclick = "infoWindow.close()">CLOSE' +
             '</a></div>';
         infoWindow.setContent(content);
-        infoWindow.open(map,marker);
+        infoWindow.open(map,markerDragon);
         infoWindow.close;
          
-        if (marker.getAnimation() != null) {
-            marker.setAnimation(null);
+        if (markerDragon.getAnimation() != null) {
+            markerDragon.setAnimation(null);
         } else {
-            marker.setAnimation(google.maps.Animation.DROP);
+            markerDragon.setAnimation(google.maps.Animation.DROP);
           }
+
+          var lat = markerDragon.getPosition().lat();
+          var lng = markerDragon.getPosition().lng();
+
+          $("#reportLat").val(lat);
+          $("#reportLng").val(lng);
         }
 
  }
