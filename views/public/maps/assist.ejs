@@ -13,29 +13,49 @@
 </script>
 <script type="text/javascript">
   function initialize() {
+  
+    var latLng = new google.maps.LatLng(<%= userEvent.latitude  %>, <%= userEvent.longitude  %>); 
+    var geocoder = new google.maps.Geocoder();
+     
     var mapOptions = {
-      center: new google.maps.LatLng(<%= userEvent.latitude  %>, <%= userEvent.longitude  %>),
-      zoom: 7
+      center: latLng,
+      zoom: 9
     };
+    
     var map = new google.maps.Map(document.getElementById("map-canvas"),
         mapOptions);
-
-	// Heat map 
-    var pointData = [
-		      new google.maps.LatLng(14.559, 121.017),
-		      new google.maps.LatLng(14.559, 121.017),
-		      new google.maps.LatLng(14.559, 121.017),
-		      new google.maps.LatLng(14.559, 121.017)
-  			];
-    var pointArray = new google.maps.MVCArray(pointData);
+        
+     geocoder.geocode( { 'latLng': latLng}, function(results) {
+            var infoWindow = new google.maps.InfoWindow();
+            if(results[1]) {
+                var markerPointer = new google.maps.Marker({
+                    position: results[0].geometry.location,
+                    map: map,
+                    animation: google.maps.Animation.Drop,
+                });
+                
+             var content = '<div id="infoWindow">' +
+                '<h2><%= userEvent.title %> </h2>' + 
+                '<p><%= userEvent.title %> </p>' +
+                 '<p><%= userEvent.note %> </p>' +
+                '<div class="pull-right"><a href="#" id= "cancel_button" class="btn" onclick = "infoWindow.close()">CLOSE' +
+                '</a></div>';
+                
+               map.setCenter(latLng);
+            
+                infoWindow.setContent(content);
+                infoWindow.open(map,markerPointer);
+                infoWindow.close;
+            }
+        });
     
-    var heatmap = new google.maps.visualization.HeatmapLayer({
-	    data: pointArray
-	  });
-
-	  heatmap.setMap(map);
+         
   }
   google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+<script type="text/javascript">
+    $('.tools-wrapper').addClass('hide');
 </script>
 
 
