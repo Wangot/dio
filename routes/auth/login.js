@@ -15,7 +15,7 @@ module.exports = function(server) {
     );
 
     server.post('/login',
-      passport.authenticate('local', { successRedirect: '/dashboard', failureRedirect: '/login', failureFlash: true }),
+      passport.authenticate('local', { successRedirect: '/reports', failureRedirect: '/login', failureFlash: true }),
       function(req, res){
         // DO NOT REDIRECT HERE BECAUSE successRedirect is already set! 
         // (only do redirection here when this needs to contains the success handler:
