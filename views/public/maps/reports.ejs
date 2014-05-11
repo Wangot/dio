@@ -296,7 +296,7 @@ function hideHeatMap(){
         <h4 class="modal-title" id="myModalLabel">Disaster Article</h4>
       </div>
       <div class="modal-body">
-         <form action="" method="post">
+         <form method="post" onSubmit="return false;">
             
              <div class="form-group">
                   <label for="type" class="col-md-3">
@@ -415,6 +415,7 @@ $(function() {
         success: function(data) {
           if (data.status == 'success') {
               $('#files').find('.btn-primary').click();
+              $('#article').modal('close');
           }
         }
       });

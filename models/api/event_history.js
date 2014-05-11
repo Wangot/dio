@@ -118,11 +118,10 @@ module.exports = {
   filterList: function(params){
     var filterData = {};
 
-    if (params.event) {
-      filterData.event_id = orm.eq(params.event);
-    }
+      if (params.event && params.event != "all") {
+        filterData.event_id = orm.eq(params.event);
+      }
 
-    if (params.dateFrom && params.dateTo) {
       if(params.dateFrom) {
         var dateFrom = new Date(params.dateFrom);
       } else {
@@ -138,7 +137,6 @@ module.exports = {
       dateTo.setHours(23,59,59,59);
 
       filterData.created = orm.between(dateformat(dateFrom, "yyyy-mm-dd H:MM:ss"), dateformat(dateTo, "yyyy-mm-dd H:MM:ss"));
-    }
 
     return filterData; 
   },

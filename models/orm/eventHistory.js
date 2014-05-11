@@ -8,7 +8,7 @@ module.exports = function(db) {
     description   : { type: 'text', big: true },
     created       : { type: 'date', time: true },
     latitude    : { type: 'text', size: 255, required: true },
-    longtitude  : { type: 'text', size: 255, required: true }
+    longitude  : { type: 'text', size: 255, required: true }
   }, {
     autoFetch : true,
     methods: {

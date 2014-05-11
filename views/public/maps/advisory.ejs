@@ -1,47 +1,529 @@
 <% layout('../layout') -%>
 
+<link rel="stylesheet" href="/public/css/jquery.fileupload.css">
+
+
 <style type="text/css">
   html { height: 100% }
   body { height: 100%; margin: 0; padding: 0 }
   #map-canvas { 
-  	height: 740px;
-  	width: 100%;
+    height: 740px;
+    width: 100%;
   }
 </style>
 <script type="text/javascript"
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWOlwKkkrv_9ZfMcySRcsNQeKGACHpEA4&sensor=true&libraries=visualization">
 </script>
 <script type="text/javascript">
+// Set to global
+var map;
+var markers = [];
+var heatmap;
+var pointData = [];
+var infoWindow = null;
+
   function initialize() {
-    var mapOptions = {
-      center: new google.maps.LatLng(14.559, 121.017),
-      zoom: 7
-    };
-    var map = new google.maps.Map(document.getElementById("map-canvas"),
-        mapOptions);
-
-
-
-	// Heat map 
-    var pointData = [
-		      new google.maps.LatLng(14.559, 121.017),
-		      new google.maps.LatLng(14.559, 121.017),
-		      new google.maps.LatLng(14.559, 121.017),
-		      new google.maps.LatLng(14.559, 121.017)
-  			];
-    var pointArray = new google.maps.MVCArray(pointData);
     
-    var heatmap = new google.maps.visualization.HeatmapLayer({
-	    data: pointArray
-	  });
+    var latLng = new google.maps.LatLng(14.559, 121.017);
 
-	  heatmap.setMap(map);
+    var mapOptions = {
+        center: latLng,
+        zoom: 9,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        panControl: true,
+        zoomControl: true,          
+        streetViewControl: false
+    };
+    
+    map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+    
+    // GEO Location
+    // Try HTML5 geolocation
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = new google.maps.LatLng(position.coords.latitude,
+                                         position.coords.longitude);
+
+        map.setCenter(pos);
+      }, function() {
+        handleNoGeolocation(true);
+      });
+    } else {
+      // Browser doesn't support Geolocation
+      handleNoGeolocation(false);
+    }
+
+    // Add points using user events
+
+      loadUserEvents();
 
 
+    //addMapPoint(map);
 
+    // Place a draggable marker on the map
+    var markerDragon = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        animation: google.maps.Animation.DROP,
+        draggable:true,
+    });
+    
+     google.maps.event.addListener(markerDragon, 'dragend', toggleBounce);
+     
+     function toggleBounce() {
+        if (infoWindow) {
+            infoWindow.close();
+        }
+        // Creating a global infoWindow object that will be reused by all markers
+        infoWindow = new google.maps.InfoWindow();
+        
+         var content = '<div id="infoWindow">' +
+            '<h2> Do you want to report a disaster?</h2>' + 
+            '<div class="pull-right" style="margin-top: 15px;"><a href="#" id= "report_button" class="btn" data-toggle="modal" data-target="#report">REPORT</a>' +
+            '<a href="#" id= "cancel_button" class="btn" onclick = "infoWindow.close()">CLOSE' +
+            '</a></div>';
+        infoWindow.setContent(content);
+        infoWindow.open(map,markerDragon);
+        infoWindow.close;
+         
+        if (markerDragon.getAnimation() != null) {
+            markerDragon.setAnimation(null);
+        } else {
+            markerDragon.setAnimation(google.maps.Animation.DROP);
+        }
+
+          var lat = markerDragon.getPosition().lat();
+          var lng = markerDragon.getPosition().lng();
+
+          $("#reportLat").val(lat);
+          $("#reportLng").val(lng);
+    }
+
+ }
+ 
+ function handleNoGeolocation(errorFlag) {
+  if (errorFlag) {
+    var content = 'Error: The Geolocation service failed.';
+  } else {
+    var content = 'Error: Your browser doesn\'t support geolocation.';
   }
-  google.maps.event.addDomListener(window, 'load', initialize);
+
+  var latLng = new google.maps.LatLng(14.559, 121.019);
+  map.setCenter(latLng);
+}   
+ 
+ google.maps.event.addDomListener(window, 'load', initialize);
+
+ function loadUserEvents () {
+   $.ajax({
+      url: "/api/event_histories",
+      dataType: "json",
+      type: "GET",
+      data: {dateFrom: $("#dateFrom").val(), dateTo: $("#dateTo").val(), "event": $("#disaster").val()},
+      success: function(jsonData){
+        if(jsonData.code == 1){
+          var userEvents = jsonData.data;
+          pointData = [];
+          userEvents.forEach(function(userEvent) {
+            addMapPoint(userEvent)
+          });
+
+          populateHeatMap();
+
+        } else {
+          alert(jsonData.message);
+        }
+      }
+   });
+ }
+
+function populateHeatMap(){
+  var pointArray = new google.maps.MVCArray(pointData);
+  heatmap = new google.maps.visualization.HeatmapLayer({
+      data: pointArray
+    });
+}
+
+    
+  function addMapPoint(userEvent) {
+
+    var latLng = new google.maps.LatLng(userEvent.latitude, userEvent.longitude);
+    
+    pointData.push(latLng);
+
+    //TODO: create a template for this
+    var content = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h4 style="font-size: 16px;margin-bottom: 5px;">'+ userEvent.title +'</h4>'+
+      '<p style="font-style: italic;font-weight: 400;font-size: 10px;">'+ userEvent.created +'</p>'+
+      '<div id="bodyContent">'+
+      '<ul><li><b>Hazard/Disaster Type: </b>' + userEvent.event+
+      '<li><b>Description: </b>'+ userEvent.description +
+      '</li></div>'+
+      '</div>';
+      
+    var infowindow = new google.maps.InfoWindow({
+      content: content
+    });
+    
+    var marker = new google.maps.Marker({
+        position: latLng,
+        map: map,
+        icon: 'public/images/disasters/'+ getIconByIdEvent(userEvent.eventId),
+     });
+     
+    markers.push(marker);
+
+     google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map,marker);
+      });
+  }
+
+  function getIconByIdEvent(id) {
+    var icon = "";
+    switch(id){
+      case 1: icon = "earthquake.png";
+        break;
+       case 2: icon = "flood.png";
+        break;
+       case 3: icon = "rainfall.png";
+        break;
+      default: icon = "flood.png";
+    }
+    return icon;
+  }
+
+//
+function changeLayerDisplay() {
+  // alert($("#mapLayer").val())
+  switch($("#mapLayer").val()) {
+    case 'heatmap':
+        clearMarkers();
+        showHeatMap();
+      break
+    case 'marker':
+    default:
+      hideHeatMap();
+      showMarkers();
+  }
+}
+
+// Sets the map on all markers in the array.
+function setAllMap(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+  setAllMap(null);
+}
+
+// Shows any markers currently in the array.
+function showMarkers() {
+  setAllMap(map);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  clearMarkers();
+  markers = [];
+}
+
+function showHeatMap(){
+  heatmap.setMap(map);
+}
+
+function hideHeatMap(){
+  heatmap.setMap(null);
+}
+
+
 </script>
 
+<!-- Modal -->
+<div class="modal fade" id="report" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Report A Disaster</h4>
+      </div>
+      <div class="modal-body">
+         <form action="" method="post">
+            
+             <div class="form-group">
+                  <label for="type" class="col-md-3">
+                  Disaster Type:
+                  </label>
+                  <div class="col-md-9">
+                    <select id="event">
+                      <option value="1">Seismologic</option>
+                      <option value="2">Volcanic</option>
+                      <option value="3">Weather</option>
+                      <option value="4">Climate</option>
+                    </select>
+                  </div>
+            </div>
+            
+            <div class="form-group">
+                  <label for="disaster-desc" class="col-md-3">
+                  Disaster Description:
+                  </label>
+                  <div class="col-md-9">
+                    <textarea id="message_area" rows="4" cols="40" name=""></textarea>
+                  </div>    
+            </div>
+            <input type="hidden" name="reportLat" class="form-control" id="reportLat" />
+            <input type="hidden" name="reportLng" class="form-control" id="reportLng" />
+        </form> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="addReport" class="btn btn-primary">Submit Report</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="article" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Disaster Article</h4>
+      </div>
+      <div class="modal-body">
+         <form method="post" onSubmit="return false;">
+            
+             <div class="form-group">
+                  <label for="type" class="col-md-3">
+                  Article Title:
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" id="article_title">
+                  </div>
+            </div>
+            
+            <div class="form-group">
+                  <label for="disaster-desc" class="col-md-3">
+                  Article Description:
+                  </label>
+                  <div class="col-md-9">
+                    <textarea id="article_desc" rows="4" cols="40" name=""></textarea>
+                  </div>    
+            </div>
+
+             <div class="form-group">
+                  <label for="type" class="col-md-3">
+                  Article Tags:
+                  </label>
+                  <div class="col-md-9">
+                    <input type="text" id="article_tags">
+                  </div>
+            </div>
+
+            <input id="fileupload" type="file" name="files[]" multiple class="hide">
+
+            <div id="progress" class="progress">
+              <div class="progress-bar progress-bar-success"></div>
+            </div>
+            <!-- The container for the uploaded files -->
+            <div id="files" class="files"></div>
+
+        </form> 
+      </div>
+      <div class="modal-footer">
+        <a id="uploadImage" class="btn btn-primary"><i class="glyphicon glyphicon-camera"></i></a>        
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="addArticle" class="btn btn-primary">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <script src="/public/js/vendor/jquery.ui.widget.js"></script>
+      <script src="http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js"></script>
+        <!-- The Canvas to Blob plugin is included for image resizing functionality -->
+        <script src="http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+        <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+        <script src="/public/js/jquery.iframe-transport.js"></script>
+        <!-- The basic File Upload plugin -->
+        <script src="/public/js/jquery.fileupload.js"></script>
+        <!-- The File Upload processing plugin -->
+        <script src="/public/js/jquery.fileupload-process.js"></script>
+        <!-- The File Upload image preview & resize plugin -->
+        <script src="/public/js/jquery.fileupload-image.js"></script>
+        <!-- The File Upload audio preview plugin -->
+        <script src="/public/js/jquery.fileupload-audio.js"></script>
+        <!-- The File Upload video preview plugin -->
+        <script src="/public/js/jquery.fileupload-video.js"></script>
+        <!-- The File Upload validation plugin -->
+        <script src="/public/js/jquery.fileupload-validate.js"></script>
+
+<script>
+
+$(document).on('click', '#addReport', function() {
+  $.ajax({
+    url: "/api/event_histories",
+    dataType: "json",
+     type: "POST",
+     data: {
+         user_id: 2,
+         title: "Report from web application...",
+         description: $('#message_area').val(),
+         latitude: $('#reportLat').val(),
+         longitude: $('#reportLng').val(),
+         event_id: $('#event').val(),
+         event_level_id: 1,
+         note: "Hello there sexy"
+     },
+     success: function (jsonData) {
+         alert(jsonData.message);
+         $('#report').modal('hide');
+         if (confirm('Do you want to add article in this event?') == true) {
+          $('#article').modal('show');
+         }
+     },
+     error: function (xhr, status, error) {
+         //  console.log('ajax done - error');
+         console.log("ERROR - xhr.status: " + xhr.status + '\nxhr.responseText: ' + xhr.responseText + '\nxhr.statusText: ' + xhr.statusText + '\nError: ' + error + '\nStatus: ' + status);
+     },
+     complete: function () {
+
+     }
+   });
+});
+
+$(function() {
+
+ $(document).on('click', '#uploadImage', function() {
+      $('#fileupload').click();
+  });
+
+  $(document).on('click', '#addArticle', function() {
+      $.ajax({
+        url : '/api/article',
+        data : { title: $('#article_title').val(), 
+                 content : $('#article_desc').val(), 
+                 tags : $('#article_tags').val()
+                },
+        type: 'POST',
+        dataType: 'json',
+        success: function(data) {
+          if (data.status == 'success') {
+              $('#files').find('.btn-primary').click();
+              $('#article').modal('close');
+          }
+        }
+      });
+  });
+
+  var urls = window.location.hostname === 'blueimp.github.io' ?
+          '//jquery-file-upload.appspot.com/' : '/upload/image',
+  uploadButton = $('<button/>')
+      .addClass('btn btn-primary hide')
+      .prop('disabled', true)
+      .text('Processing...')
+      .on('click', function () {
+          var $this = $(this),
+              data = $this.data();
+          $this
+              .off('click')
+              .text('Abort')
+              .on('click', function () {
+                  $this.remove();
+                  data.abort();
+              });
+          data.submit().always(function () {
+              $this.remove();
+          });
+      });
+$('#fileupload').fileupload({
+  url: '/upload/image',
+  dataType: 'json',
+  autoUpload: false,
+  acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+  maxFileSize: 5000000, // 5 MB
+  // Enable image resizing, except for Android and Opera,
+  // which actually support image resizing, but fail to
+  // send Blob objects via XHR requests:
+  disableImageResize: /Android(?!.*Chrome)|Opera/
+      .test(window.navigator.userAgent),
+  previewMaxWidth: 100,
+  previewMaxHeight: 100,
+  previewCrop: true,
+  formData: {
+      article_id: $('#articleId').val()
+    }
+}).on('fileuploadadd', function (e, data) {
+  data.context = $('<div/>').appendTo('#files');
+  $.each(data.files, function (index, file) {
+      var node = $('<p/>')
+              .append($('<span/>').text(file.name));
+      if (!index) {
+          node
+              .append('<br>')
+              .append(uploadButton.clone(true).data(data));
+      }
+      node.appendTo(data.context);
+  });
+}).on('fileuploadprocessalways', function (e, data) {
+  var index = data.index,
+      file = data.files[index],
+      node = $(data.context.children()[index]);
+  if (file.preview) {
+      node
+          .prepend('<br>')
+          .prepend(file.preview);
+  }
+  if (file.error) {
+      node
+          .append('<br>')
+          .append($('<span class="text-danger"/>').text(file.error));
+  }
+  if (index + 1 === data.files.length) {
+      data.context.find('button')
+          .text('Upload')
+          .prop('disabled', !!data.files.error);
+  }
+}).on('fileuploadprogressall', function (e, data) {
+  var progress = parseInt(data.loaded / data.total * 100, 10);
+  $('#progress .progress-bar').css(
+      'width',
+      progress + '%'
+  );
+}).on('fileuploaddone', function (e, data) {
+  $.each(data.result.files, function (index, file) {
+      if (file.url) {
+          var link = $('<a>')
+              .attr('target', '_blank')
+              .prop('href', file.url);
+          $(data.context.children()[index])
+              .wrap(link);
+      } else if (file.error) {
+          var error = $('<span class="text-danger"/>').text(file.error);
+          $(data.context.children()[index])
+              .append('<br>')
+              .append(error);
+      }
+  });
+}).on('fileuploadfail', function (e, data) {
+  $.each(data.files, function (index, file) {
+      var error = $('<span class="text-danger"/>').text('File upload failed.');
+      $(data.context.children()[index])
+          .append('<br>')
+          .append(error);
+  });
+}).prop('disabled', !$.support.fileInput)
+  .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+});
+
+</script>
 
 <div id="map-canvas"/>
+
