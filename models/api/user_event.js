@@ -55,7 +55,7 @@ module.exports = {
                   break;
                 case 'EMAIL':
                 case 'OTHERS_EMAIL':
-                  mailer.send(contact.value, "Assistance In Disaster [NEED HELP]", message +" Last Seen : "+mapUrl, "");
+                  mailer.send(contact.value, "Alertness In Disaster [NEED HELP]", message +" Last Seen : "+mapUrl, "");
                   break;
                 default:
                   break;
@@ -63,7 +63,7 @@ module.exports = {
               return Q.ninvoke(Contact, 'get', contact.id);
             })
             .fail(function(err) {
-              throw new Error('Invalid User Package data.');
+              throw new Error('Invalid data.');
             });
           }
           var myPromise = alertUser(userAlertSettings[i]);

@@ -11,10 +11,66 @@ module.exports = {
   create: function(req, res) {
     var EventHistory = require(path.join(modelsPath, '/eventHistory'))(req.db);
     var eventDetails = this.formatBeforeCreate(req.body);
+    var Contact = require(path.join(modelsPath, '/contact'))(req.db);
+    var UserAlertSetting = require(path.join(modelsPath, '/userAlertSetting'))(req.db);
+
+    var mailer = require(path.resolve("./models/service/email.js"));
+    var servicePath = path.resolve('./', 'models', 'service');
+    var serviceSMSAPI = require(servicePath + '/sms_API.js');
+    var eventcreated;
 
     Q.ninvoke(EventHistory, 'create', eventDetails)
     .then(function(createdEvent){
-      return res.send(new ApiReturn(true, createdEvent, message.DATA_SUCCESSFULLY_CREATED, eventDetails));
+      eventcreated = createdEvent;
+      // get contact of the user
+      return Q.ninvoke(UserAlertSetting, 'find', {
+        user_id: createdEvent.user_id, 
+        event_id: createdEvent.event_id,
+        type:'SYSTEM'
+      })
+    })
+    .then(function(userAlertSettings){
+      if (userAlertSettings.length > 0) {
+        var promises = [];
+        for (var i=0; i<userAlertSettings.length; i++) {
+          var alertUser = function(alertSetting){
+            return Q.ninvoke(Contact, 'get', alertSetting.contact_id)
+            .then(function(contact) {
+
+              // compose location url
+              var mapUrl = config.baseUrl +'/assist?userEventHistoryId=' + eventcreated.id;
+              // compose message
+              var message = "Description :"+eventcreated.description ; // TODO
+
+              switch(contact.type) {
+                case 'MOBILE_NUMBER':
+                  serviceSMSAPI.sendSMS_TWILLIO(message, function(err, data) {
+                    // sucessfully sent
+                  });
+                  break;
+                case 'EMAIL':
+                  mailer.send(contact.value, "Alertness In Disaster [ALERT]", message +" Location : "+mapUrl, "");
+                  break;
+                default:
+                  break;
+              }
+              return Q.ninvoke(Contact, 'get', contact.id);
+            })
+            .fail(function(err) {
+              throw new Error('Invalid data.');
+            });
+          }
+          var myPromise = alertUser(userAlertSettings[i]);
+          promises.push(myPromise);
+        }
+        return Q.all(promises);
+      } else {
+        return true;
+      }
+
+    })
+    .then(function(createdEvent){
+      return res.send(new ApiReturn(true, eventcreated, message.DATA_SUCCESSFULLY_CREATED, eventDetails));
     })
     .fail(function(err) {
       console.log(err);
