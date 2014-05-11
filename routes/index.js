@@ -30,6 +30,8 @@ exports.attachHandlers = function attachHandlers (server) {
 
     require("./user")(server);    
     require('./post_calamity')(server);
+
+    server.post('/upload/image', doUploading);    
 };
 
 var index = function(req, res){
@@ -82,4 +84,44 @@ var sendSMS = function(req, res) {
       res.send(200, 'Message Sent!');
     }
   });
+}
+
+var doUploading = function(req, res) {
+  var fs = require('fs');
+  var path = require('path');
+
+  var uploadPath = path.resolve('./views/resources/uploads/article');
+  var articleId = req.session.article_id;
+  var imageUploadPath = uploadPath + '/' + articleId;
+
+    var filesData = req.files.files[0],
+      fileName = filesData.name,
+      fileType = filesData.type,
+      tempFilePath = filesData.path;
+
+  var file = fs.readFileSync(tempFilePath);
+
+  fs.stat(imageUploadPath, function(err, stat) {
+    if(err == null) {
+        copyFromTMP(imageUploadPath + '/' + fileName, file);
+    } else if(err.code == 'ENOENT') {
+        fs.mkdir(imageUploadPath, function(e) {
+          copyFromTMP(imageUploadPath + '/' + fileName, file);
+        });
+    } else {
+        console.log('Some other error: ', err.code);
+    }
+  });
+
+}
+
+function copyFromTMP(path, bufferFile, cb) {
+  var fs = require('fs');
+  fs.writeFile(path, bufferFile, function(err) {
+      if(err) {
+          console.log(err);
+      } else {
+          console.log("The file was saved!");
+      }
+  }); 
 }
