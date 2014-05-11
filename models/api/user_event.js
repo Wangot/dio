@@ -42,7 +42,7 @@ module.exports = {
             .then(function(contact) {
 
               // compose location url
-              var mapUrl = config.baseUrl +'/assist/'+ eventcreated.event_id +'/' +eventcreated.id;
+              var mapUrl = config.baseUrl +'/assist?userEventHistoryId=' + eventcreated.id;
               // compose message
               var message = "NOTE :"+eventcreated.note ; // TODO
 
