@@ -105,7 +105,7 @@ module.exports = function(server) {
       .then(createUserAlertSetting)
       .then(function(data) {
         req.flash('success', successMessage);
-        var redirectUrl = '/dashboard';
+        var redirectUrl = '/reports';
 
         // autologin user + redirect to paypal payment page
         var passport = require('passport');
