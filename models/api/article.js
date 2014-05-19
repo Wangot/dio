@@ -14,7 +14,6 @@ module.exports = {
     var articleDetails = this.formatBeforeCreate(req.body);
     Q.ninvoke(Article, 'create', articleDetails)
     .then(function(createdEvent){
-      req.session.article_id = createdEvent.id;
       return res.send(new ApiReturn(true, createdEvent, message.DATA_SUCCESSFULLY_CREATED, articleDetails));
     })
     .fail(function(err) {

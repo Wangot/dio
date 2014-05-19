@@ -409,8 +409,6 @@ a,a:hover {
         <script type='text/javascript'>
 
         var formOpened = false;
-        var url = '/upload/image';
-
         $(document).ready(function() {
           $(document).on('click', '#composeText', function() {
             if (formOpened == false) {
@@ -440,19 +438,14 @@ a,a:hover {
                 success: function(data) {
                   if (data.status == 'success') {
                     var article_id = data.data.id;
-                      $('#files').find('.btn-primary').click();
+                    $('#articleId').val(article_id)
+                    $('#files').find('.btn-primary')
+                               .click();
                   }
                 }
               });
           });
 
-          function setUrl (article_id) {
-            url = url + '/' + article_id;
-          }
-          function getUrl() {
-              return url;
-          }
-            'use strict';
             // Change this to the location of your server-side upload handler:
             var urls = window.location.hostname === 'blueimp.github.io' ?
                         '//jquery-file-upload.appspot.com/' : '/upload/image',
@@ -475,7 +468,7 @@ a,a:hover {
                         });
                     });
             $('#fileupload').fileupload({
-                url: getUrl(),
+                url: '/upload/image',
                 dataType: 'json',
                 autoUpload: false,
                 acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -488,9 +481,6 @@ a,a:hover {
                 previewMaxWidth: 100,
                 previewMaxHeight: 100,
                 previewCrop: true,
-                formData: {
-                    article_id: $('#articleId').val()
-                  }
             }).on('fileuploadadd', function (e, data) {
                 data.context = $('<div/>').appendTo('#files');
                 $.each(data.files, function (index, file) {
@@ -552,6 +542,16 @@ a,a:hover {
                 });
             }).prop('disabled', !$.support.fileInput)
                 .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+          $('#fileupload').bind('fileuploadsubmit', function (e, data) {
+              // The example input, doesn't have to be part of the upload form:
+              var article_id = $('#articleId').val();
+              data.formData = {article_id: article_id};
+              if (!data.formData.article_id) {
+                alert('Cannot upload images!');
+                return false;
+              }
+          });                
 /*
           $(document).on('blur', '#composeTextArea' ,function() {
             console.log('sdsd');

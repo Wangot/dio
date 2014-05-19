@@ -2,5 +2,6 @@
 .buildpath
 .project
 .settings/*
+views/resources/uploads/article/*
 dio.sublime-project
 dio.sublime-workspace

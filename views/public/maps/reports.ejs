@@ -261,7 +261,7 @@ function hideHeatMap(){
         <h4 class="modal-title" id="myModalLabel">Report A Disaster</h4>
       </div>
       <div class="modal-body">
-         <form action="" method="post">
+         <form method="post">
             
              <div class="form-group">
                   <label for="type" class="col-md-3">
@@ -335,15 +335,16 @@ function hideHeatMap(){
                   </div>
             </div>
 
-            <input id="fileupload" type="file" name="files[]" multiple class="hide">
-
-            <div id="progress" class="progress">
-              <div class="progress-bar progress-bar-success"></div>
-            </div>
-            <!-- The container for the uploaded files -->
-            <div id="files" class="files"></div>
 
         </form> 
+          <input type="hidden" id="articleId">
+          <input id="fileupload" type="file" name="files[]" multiple class="hide">
+
+          <div id="progress" class="progress">
+            <div class="progress-bar progress-bar-success"></div>
+          </div>
+          <!-- The container for the uploaded files -->
+          <div id="files" class="files"></div>
       </div>
       <div class="modal-footer">
         <a id="uploadImage" class="btn btn-primary"><i class="glyphicon glyphicon-camera"></i></a>        
@@ -424,8 +425,10 @@ $(function() {
         dataType: 'json',
         success: function(data) {
           if (data.status == 'success') {
-              $('#files').find('.btn-primary').click();
-              $('#article').modal('close');
+            var article_id = data.data.id;
+            $('#articleId').val(article_id);
+            $('#files').find('.btn-primary').click();
+            $('#article').modal('close');
           }
         }
       });
@@ -451,6 +454,7 @@ $(function() {
               $this.remove();
           });
       });
+
 $('#fileupload').fileupload({
   url: '/upload/image',
   dataType: 'json',
@@ -465,9 +469,7 @@ $('#fileupload').fileupload({
   previewMaxWidth: 100,
   previewMaxHeight: 100,
   previewCrop: true,
-  formData: {
-      article_id: $('#articleId').val()
-    }
+
 }).on('fileuploadadd', function (e, data) {
   data.context = $('<div/>').appendTo('#files');
   $.each(data.files, function (index, file) {
@@ -530,6 +532,16 @@ $('#fileupload').fileupload({
 }).prop('disabled', !$.support.fileInput)
   .parent().addClass($.support.fileInput ? undefined : 'disabled');
 
+});
+
+$('#fileupload').bind('fileuploadsubmit', function (e, data) {
+    // The example input, doesn't have to be part of the upload form:
+    var article_id = $('#articleId').val();
+    data.formData = {article_id: article_id};
+    if (!data.formData.article_id) {
+      alert('Cannot upload images!');
+      return false;
+    }
 });
 
 </script>

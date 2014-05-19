@@ -91,7 +91,7 @@ var doUploading = function(req, res) {
   var path = require('path');
 
   var uploadPath = path.resolve('./views/resources/uploads/article');
-  var articleId = req.session.article_id;
+  var articleId = req.body.article_id;
   var imageUploadPath = uploadPath + '/' + articleId;
 
     var filesData = req.files.files[0],
@@ -103,16 +103,21 @@ var doUploading = function(req, res) {
 
   fs.stat(imageUploadPath, function(err, stat) {
     if(err == null) {
-        copyFromTMP(imageUploadPath + '/' + fileName, file);
+        copyFromTMP(imageUploadPath + '/' + fileName, file, function() {
+          res.json(200, 'test');
+        });
     } else if(err.code == 'ENOENT') {
         fs.mkdir(imageUploadPath, function(e) {
-          copyFromTMP(imageUploadPath + '/' + fileName, file);
+          copyFromTMP(imageUploadPath + '/' + fileName, file, function() {
+             res.json(200, 'test');
+          });
         });
     } else {
         console.log('Some other error: ', err.code);
     }
   });
 
+  res.json(200, 'test');
 }
 
 function copyFromTMP(path, bufferFile, cb) {
@@ -122,6 +127,7 @@ function copyFromTMP(path, bufferFile, cb) {
           console.log(err);
       } else {
           console.log("The file was saved!");
+          cb(0);
       }
   }); 
 }
