@@ -428,7 +428,6 @@ $(function() {
             var article_id = data.data.id;
             $('#articleId').val(article_id);
             $('#files').find('.btn-primary').click();
-            $('#article').modal('close');
           }
         }
       });
@@ -508,6 +507,9 @@ $('#fileupload').fileupload({
       progress + '%'
   );
 }).on('fileuploaddone', function (e, data) {
+  setTimeout(function() {
+    location.reload();
+  }, 1000);
   $.each(data.result.files, function (index, file) {
       if (file.url) {
           var link = $('<a>')
